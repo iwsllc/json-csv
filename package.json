@@ -1,6 +1,6 @@
 {
   "name": "json-csv",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Export a richly structured, JSON array to CSV",
   "homepage": "https://github.com/cynaptik/json-csv",
   "author": "Nathan Bridgewater <nathan@integratedwebsystems.com> (http://integratedwebsystems.com/)",
