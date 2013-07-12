@@ -14,6 +14,11 @@ var items = [
     name : 'jo with a comma,',
     email : 'jo@somewhere',
     amount : 1.02
+  },
+  {
+    name : 'jo with a quote"',
+    email : 'jo@somewhere',
+    amount : 1.02
   }]
 
 csv.toCSV({
@@ -26,6 +31,10 @@ csv.toCSV({
     {
         name : 'email',
         label : 'Email'
+    },
+    {
+        name : 'amount',
+        label : 'Amount'
     }
   ]},
   function(err,csv) {

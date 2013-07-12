@@ -9,7 +9,7 @@ Example
 Simple structure with basic CSV conversion. 
 
 ```
-var csv = require('json-csv')
+var csv = require('../json-csv')
 var items = [
   {
     name : 'fred',
@@ -25,6 +25,11 @@ var items = [
     name : 'jo with a comma,',
     email : 'jo@somewhere',
     amount : 1.02
+  },
+  {
+    name : 'jo with a quote"',
+    email : 'jo@somewhere',
+    amount : 1.02
   }]
 
 csv.toCSV({
@@ -37,6 +42,10 @@ csv.toCSV({
     {
         name : 'email',
         label : 'Email'
+    },
+    {
+        name : 'amount',
+        label : 'Amount'
     }
   ]},
   function(err,csv) {
@@ -44,11 +53,13 @@ csv.toCSV({
   });
 ```
 
+Generates Output: 
 ``` output
-Name,Email
-fred,fred@somewhere
-jo,jo@somewhere
-"jo with a comma,",jo@somewhere
+Name,Email,Amount
+fred,fred@somewhere,1.02
+jo,jo@somewhere,1.02
+"jo with a comma,",jo@somewhere,1.02
+"jo with a quote""",jo@somewhere,1.02
 ```
 
 Here's a little more advanced sample that uses sub-structures and a filter for manipulating output for individual columns. 
@@ -117,6 +128,7 @@ csv.toCSV({
 
 ```
 
+Generates Output: 
 ``` output
 Company,Name,Email,Year,Level
 "Widgets, LLC",John Doe,john@widgets.somewhere,2013,Unknown
