@@ -3,6 +3,39 @@ json-csv
 
 Simple CSV export module that can export a rich JSON array of objects to CSV. 
 
+Usage
+-----
+```
+var csv = require('json-csv')
+csv.toCSV(args, callback)
+
+var callback = function(err,csv) {
+  //csv contains string of converted data in CSV format. 
+}
+```
+
+Arguments: 
+```
+  {
+    //required: array of data
+    data : [],
+
+    //field definitions for CSV export
+    fields : 
+    [
+      {
+        //required: field name for source value
+        name : 'string',
+
+        //required: column label for CSV header
+        label : 'string',
+
+        //optional: filter to tranfsorm value before exporting
+        filter : function(value) { return value; }
+      }
+    ]
+  }
+```
 
 Example
 -------
