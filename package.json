@@ -3,11 +3,7 @@
   "version": "0.0.1",
   "description": "Export a richly structured, JSON array to CSV",
   "homepage": "http://cynaptik.net/npm/json-csv",
-  "author": {
-    "name": "Nathan Bridgewater",
-    "email": "nathan@integratedwebsystems.com",
-    "url": "http://integratedwebsystems.com/"
-    },
+  "author": "Nathan Bridgewater <nathan@integratedwebsystems.com> (http://integratedwebsystems.com/)",
   "keywords": [
     "csv",
     "export",
@@ -29,5 +25,18 @@
   "devDependencies": {
     "mocha": "latest",
     "should": "latest"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/Cynaptik/json-csv/issues"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "should": "~1.2.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "license": "BSD"
 }
