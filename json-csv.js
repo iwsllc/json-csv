@@ -21,8 +21,8 @@ exports.toCSV = function(args, callback) {
         if (field.filter) {
           val = field.filter(val)
         }
-
-        flatString += this.prepValue(val.toString())
+        var quoted = typeof field.quoted !== 'undefined' && field.quoted
+        flatString += this.prepValue(val.toString(), quoted)
       }
     }
   }
@@ -48,8 +48,8 @@ var getValue = function(data, args, ix) {
   return val;
 }
 
-exports.prepValue = function(arg) {
-  var quoted = arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0
+exports.prepValue = function(arg, forceQuoted) {
+  var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0
   var result = arg.replace('"','""')
   if (quoted)
     result = '"' + result + '"'

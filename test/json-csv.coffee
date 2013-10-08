@@ -64,4 +64,9 @@ describe "JSON - CSV", ->
       test = 'someString,'
       result = jsoncsv.prepValue test
       result.should.equal '"someString,"'
+      done() 
+    it 'surround with quotes if force quote option is true', (done) ->
+      test = 'someString'
+      result = jsoncsv.prepValue test, true
+      result.should.equal '"someString"'
       done()      

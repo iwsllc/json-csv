@@ -26,7 +26,8 @@ csv.toCSV({
   fields : [ 
     {
         name : 'name',
-        label : 'Name'
+        label : 'Name',
+        quoted : true
     },
     {
         name : 'email',
