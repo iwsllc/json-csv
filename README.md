@@ -70,7 +70,8 @@ csv.toCSV({
   fields : [ 
     {
         name : 'name',
-        label : 'Name'
+        label : 'Name',
+        quoted : true
     },
     {
         name : 'email',
@@ -89,8 +90,8 @@ csv.toCSV({
 Generates Output: 
 ``` output
 Name,Email,Amount
-fred,fred@somewhere,1.02
-jo,jo@somewhere,1.02
+"fred",fred@somewhere,1.02
+"jo",jo@somewhere,1.02
 "jo with a comma,",jo@somewhere,1.02
 "jo with a quote""",jo@somewhere,1.02
 ```
