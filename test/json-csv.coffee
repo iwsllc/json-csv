@@ -53,6 +53,25 @@ describe "JSON - CSV", ->
       , (err,csv) ->
         csv.should.equal('contact,amount\r\nsomething else,4.3\r\nsomething else,5\r\n')
         done() 
+    it 'run custom method if filter is provided and the value is falsey', (done) ->
+      test = [{contact : {name : 'test', thing: false, amount : 4.3}}, {contact : {thing: true, name : null, amount : 5}}]
+      jsoncsv.toCSV 
+        data : test
+        fields : [
+          name : 'contact.thing'
+          label : 'thing'
+          filter : (value) ->
+            return if value == true then 'Yes' else 'No'
+        ,
+          name : 'contact.name'
+          label : 'name'
+        ,
+          name : 'contact.amount'
+          label : 'amount'
+        ]
+      , (err,csv) ->
+        csv.should.equal('thing,name,amount\r\nNo,test,4.3\r\nYes,,5\r\n')
+        done() 
 
   describe 'Field value prep', ->
     it 'surround with quotes (and double-qoute inner) if any quotes detected within the value', (done) ->

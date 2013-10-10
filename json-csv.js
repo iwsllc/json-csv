@@ -17,7 +17,7 @@ exports.toCSV = function(args, callback) {
       var data = args.data[ix]
       var field = args.fields[jx]
       var val = this.getValue(data, field.name)
-      if (val) {
+      if (typeof val !== 'undefined' && val !== null) {
         if (field.filter) {
           val = field.filter(val)
         }
