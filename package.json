@@ -1,8 +1,8 @@
 {
   "name": "json-csv",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Export a richly structured, JSON array to CSV",
-  "homepage": "https://github.com/cynaptik/json-csv",
+  "homepage": "https://github.com/IWSLLC/json-csv",
   "author": "Nathan Bridgewater <nathan@integratedwebsystems.com> (http://integratedwebsystems.com/)",
   "keywords": [
     "csv",
@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Cynaptik/json-csv.git"
+    "url": "git@github.com:IWSLLC/json-csv.git"
   },
   "licenses": [
     {
@@ -27,7 +27,7 @@
     "should": "latest"
   },
   "bugs": {
-    "url": "https://github.com/Cynaptik/json-csv/issues"
+    "url": "https://github.com/IWSLLC/json-csv/issues"
   },
   "directories": {
     "test": "test"
