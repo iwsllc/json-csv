@@ -50,7 +50,7 @@ var getValue = function(data, args, ix) {
 
 exports.prepValue = function(arg, forceQuoted) {
   var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0
-  var result = arg.replace('"','""')
+  var result = arg.replace(/\"/g,'""')
   if (quoted)
     result = '"' + result + '"'
   return result
