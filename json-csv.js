@@ -17,10 +17,10 @@ exports.toCSV = function(args, callback) {
       var data = args.data[ix]
       var field = args.fields[jx]
       var val = this.getValue(data, field.name)
+      if (field.filter) {
+        val = field.filter(val)
+      }
       if (typeof val !== 'undefined' && val !== null) {
-        if (field.filter) {
-          val = field.filter(val)
-        }
         var quoted = typeof field.quoted !== 'undefined' && field.quoted
         flatString += this.prepValue(val.toString(), quoted)
       }
