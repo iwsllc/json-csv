@@ -23,8 +23,9 @@
     "node": "*"
   },
   "devDependencies": {
-    "mocha": "latest",
-    "should": "latest"
+    "coffee-script": "^1.7.1",
+    "mocha": "^1.20.1",
+    "should": "^4.0.4"
   },
   "bugs": {
     "url": "https://github.com/IWSLLC/json-csv/issues"
@@ -32,8 +33,7 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "scripts": {
     "test": "mocha"
   },
