@@ -1,9 +1,9 @@
 {
   "name": "json-csv",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "Export a richly structured, JSON array to CSV",
   "homepage": "https://github.com/IWSLLC/json-csv",
-  "author": "Nathan Bridgewater <nathan@integratedwebsystems.com> (http://integratedwebsystems.com/)",
+  "author": "Nathan Bridgewater <nathan@iws.io> (http://iws.io/)",
   "keywords": [
     "csv",
     "export",

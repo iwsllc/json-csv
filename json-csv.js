@@ -1,4 +1,38 @@
-exports.toCSV = function(args, callback) {
+var Readable = require("stream").Readable
+
+var exporter = function() {
+  this.stream = null
+}
+
+exporter.prototype.prepValue = function(arg, forceQuoted) {
+  var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0
+  var result = arg.replace(/\"/g,'""')
+  if (quoted)
+    result = '"' + result + '"'
+  return result
+}
+
+exporter.prototype.createReadStream = function(opts) {
+  this.stream = new Readable
+  this._toCSV(opts)
+  return this.stream
+}
+
+exporter.prototype.toCSV = function(args, callback) {
+  var s = this.createReadStream(args)
+  var result = ''
+  var buffer = null;
+  s.on('readable', function() {
+    buffer = s.read()
+    if (buffer !== null)
+      result += buffer
+  })
+  s.on('end', function() {
+    callback(null, result)
+  })
+}
+
+exporter.prototype._toCSV = function(args) {
   var flatString = ''
   var ix = 0
   for(ix=0;ix<args.fields.length;ix++) {
@@ -11,6 +45,8 @@ exports.toCSV = function(args, callback) {
   }
   for (ix=0;ix<args.data.length;ix++) {
     flatString += '\r\n'
+    this.stream.push(flatString)
+    flatString = ''
     for(var jx = 0;jx<args.fields.length; jx++) {
       if (jx > 0)
         flatString += ','
@@ -27,31 +63,26 @@ exports.toCSV = function(args, callback) {
     }
   }
   flatString += '\r\n'
-  callback(null, flatString)
+  this.stream.push(flatString)
+  this.stream.push(null)
 }
 
-exports.getValue = function(data, arg) {
+exporter.prototype.getValue = function(data, arg) {
   var args = arg.split('.')
   if (args.length > 0)
-    return getValue(data, args, 0)
+    return this.getValueIx(data, args, 0)
   return data[args[0]];
 }
 
-var getValue = function(data, args, ix) {
+exporter.prototype.getValueIx = function(data, args, ix) {
   var val = data[args[ix]]
   if (typeof val === 'undefined')
     return ''
 
   if ((args.length-1) > ix)
-    return getValue(val, args, ix+1);
+    return this.getValueIx(val, args, ix+1);
 
   return val;
 }
 
-exports.prepValue = function(arg, forceQuoted) {
-  var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0
-  var result = arg.replace(/\"/g,'""')
-  if (quoted)
-    result = '"' + result + '"'
-  return result
-}
+module.exports = new exporter()

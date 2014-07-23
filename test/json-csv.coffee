@@ -1,20 +1,18 @@
 should = require "should"
 jsoncsv = require "../json-csv"
 
-describe "JSON - CSV", -> 
-  describe "Value Evaluator", -> 
+describe "JSON - CSV", ->
+  describe "Value Evaluator", ->
     it "should evaluate value of contact.name", (done) ->
       test = {contact : {name : 'some name'}}
       result = jsoncsv.getValue(test, 'contact.name')
       result.should.equal 'some name'
       done()
-
     it "should evaluate value of contact.name.middle.initial", (done) ->
       test = {contact : {name : { middle : {initial : 'L'}}}}
       result = jsoncsv.getValue(test, 'contact.name.middle.initial')
       result.should.equal 'L'
       done()
-
     it "should evaluate undefined value of contact.name.middle.initial as blank string", (done) ->
       test = {contact : {name : 'test'}}
       result = jsoncsv.getValue(test, 'contact.test.somethingelse')
@@ -24,7 +22,7 @@ describe "JSON - CSV", ->
   describe 'JSON to CSV converter', ->
     it 'should convert list of data to csv', (done) ->
       test = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
-      jsoncsv.toCSV 
+      jsoncsv.toCSV
         data : test
         fields : [
           name : 'contact.name'
@@ -35,11 +33,10 @@ describe "JSON - CSV", ->
         ]
       , (err,csv) ->
         csv.should.equal('contact,amount\r\ntest,4.3\r\ntest2,5\r\n')
-        done()   
-
+        done()
     it 'run custom method if filter is provided', (done) ->
       test = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
-      jsoncsv.toCSV 
+      jsoncsv.toCSV
         data : test
         fields : [
           name : 'contact.name'
@@ -52,10 +49,10 @@ describe "JSON - CSV", ->
         ]
       , (err,csv) ->
         csv.should.equal('contact,amount\r\nsomething else,4.3\r\nsomething else,5\r\n')
-        done() 
+        done()
     it 'run custom method if filter is provided and the value is falsey', (done) ->
       test = [{contact : {name : 'test', thing: false, amount : 4.3}}, {contact : {thing: true, name : null, amount : 5}}]
-      jsoncsv.toCSV 
+      jsoncsv.toCSV
         data : test
         fields : [
           name : 'contact.thing'
@@ -71,7 +68,7 @@ describe "JSON - CSV", ->
         ]
       , (err,csv) ->
         csv.should.equal('thing,name,amount\r\nNo,test,4.3\r\nYes,,5\r\n')
-        done() 
+        done()
 
   describe 'Field value prep', ->
     it 'surround with quotes (and double-qoute inner) if any quotes detected within the value', (done) ->
@@ -83,9 +80,47 @@ describe "JSON - CSV", ->
       test = 'someString,'
       result = jsoncsv.prepValue test
       result.should.equal '"someString,"'
-      done() 
+      done()
     it 'surround with quotes if force quote option is true', (done) ->
       test = 'someString'
       result = jsoncsv.prepValue test, true
       result.should.equal '"someString"'
-      done()      
+      done()
+
+  describe 'JSON to CSV readable', ->
+    before (done) ->
+      @data = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
+      @fields = [
+        name : 'contact.name'
+        label : 'contact'
+      ,
+        name : 'contact.amount'
+        label : 'amount'
+      ]
+      @result = ''
+      @readable = jsoncsv.createReadStream { data : @data, fields : @fields }
+      @readable.on 'readable', =>
+        buffer = @readable.read()
+        if buffer?
+          @result += buffer
+      @readable.on 'end', =>
+        done()
+
+    it "should contain CSV result", -> @result.should.equal('contact,amount\r\ntest,4.3\r\ntest2,5\r\n')
+
+  describe 'JSON to CSV pipe', ->
+    before (done) ->
+      @data = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
+      @fields = [
+        name : 'contact.name'
+        label : 'contact'
+      ,
+        name : 'contact.amount'
+        label : 'amount'
+      ]
+      @result = ''
+      @readable = jsoncsv.createReadStream { data : @data, fields : @fields }
+      @readable.pipe(process.stdout)
+      done()
+
+    it "should display csv in console...", -> true.should.be.true
