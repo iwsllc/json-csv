@@ -1,4 +1,7 @@
 var csv = require('../index')
+var es     = require("event-stream")
+var concat = require("concat-stream")
+
 var items = [
   {
     downloaded : false,
@@ -26,7 +29,8 @@ var items = [
   }
 ];
 
-csv.csvBuffered(items, {
+var source = es.readArray(items)
+var options = {
   fields : [
     {
       name : 'contact.company',
@@ -55,7 +59,8 @@ csv.csvBuffered(items, {
         }
       }
     }]
-  },
-  function(err,csv) {
-    console.log(csv);
-  });
+  }
+
+source
+  .pipe(csv.csv(options))
+  .pipe(process.stdout)
