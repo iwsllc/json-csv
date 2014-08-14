@@ -1,6 +1,6 @@
 should   = require "should"
 jsoncsv  = require("../index")
-exporter = jsoncsv.exporter
+exporter = require("../exporter")
 es       = require("event-stream")
 concat   = require('concat-stream')
 
@@ -84,17 +84,17 @@ describe "JSON - CSV", ->
   describe 'Field value prep', ->
     it 'surround with quotes (and double-qoute inner) if any quotes detected within the value', (done) ->
       test = 'someString"'
-      result = new jsoncsv.exporter().prepValue test
+      result = new exporter().prepValue test
       result.should.equal '"someString"""'
       done()
     it 'surround with quotes if any commas detected within the value', (done) ->
       test = 'someString,'
-      result = new jsoncsv.exporter().prepValue test
+      result = new exporter().prepValue test
       result.should.equal '"someString,"'
       done()
     it 'surround with quotes if force quote option is true', (done) ->
       test = 'someString'
-      result = new jsoncsv.exporter().prepValue test, true
+      result = new exporter().prepValue test, true
       result.should.equal '"someString"'
       done()
 
