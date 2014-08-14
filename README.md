@@ -7,33 +7,37 @@ Simple CSV export module that can export a rich JSON array of objects to CSV.
 
 Usage
 -----
-```
-var csv = require('json-csv')
-csv.toCSV(args, callback)
 
+###Buffered###
+```
+var jsoncsv = require('json-csv')
+jsoncsv.csvBuffered(data, options, callback)
+```
+ - data : Array of JS objects
+ - callback : returns buffered result (see below)
+
+```
 var callback = function(err,csv) {
   //csv contains string of converted data in CSV format.
 }
 ```
 
-Streaming
----------
+###Streaming###
+When using the streaming API, you'll need to also stream data into it.
+
 ```
-var csv = require('json-csv')
-var reader = csv.createReadStream(args)
-reader.on('end', function() {
-  //all done
-})
-reader.pipe(something_writable)
+var jsoncsv = require('json-csv')
+
+var readable_source = <something readable that emits data row by row>
+readable_source
+  .pipe(jsoncsv.csv(options))
+  .pipe(something_else_writable)
 ```
 
 
-Arguments:
+###Options###
 ```
   {
-    //required: array of data
-    data : [],
-
     //field definitions for CSV export
     fields :
     [
@@ -56,7 +60,7 @@ Example
 Simple structure with basic CSV conversion.
 
 ```
-var csv = require('../json-csv')
+var jsoncsv = require('../json-csv')
 var items = [
   {
     name : 'fred',
@@ -79,7 +83,7 @@ var items = [
     amount : 1.02
   }]
 
-csv.toCSV({
+jsoncsv.csvBuffered({
   data : items,
   fields : [
     {
@@ -101,8 +105,7 @@ csv.toCSV({
 });
 
 //OR Streaming
-csv.createReadStream({
-  data : items,
+var options = {
   fields : [
     {
         name : 'name',
@@ -117,11 +120,15 @@ csv.createReadStream({
         name : 'amount',
         label : 'Amount'
     }
-  ]}).pipe(process.stdout);
+  ]}
+var source = es.readArray(items)
+source
+  .pipe(jsoncsv.csv(options))
+  .pipe(process.stdout)
 ```
 
 Generates Output:
-``` output
+```
 Name,Email,Amount
 "fred",fred@somewhere,1.02
 "jo",jo@somewhere,1.02
@@ -132,7 +139,7 @@ Name,Email,Amount
 Here's a little more advanced sample that uses sub-structures and a filter for manipulating output for individual columns.
 
 ```
-var csv = require('json-csv')
+var jsoncsv = require('json-csv')
 var items = [
   {
     contact : {
@@ -158,8 +165,7 @@ var items = [
   }
 ];
 
-csv.toCSV({
-  data : items,
+jsoncsv.csvBuffered(items, {
   fields : [
     {
       name : 'contact.company',
@@ -196,7 +202,7 @@ csv.toCSV({
 ```
 
 Generates Output:
-``` output
+```
 Company,Name,Email,Year,Level
 "Widgets, LLC",John Doe,john@widgets.somewhere,2013,Unknown
 "Sprockets, LLC",Jane Doe,jane@sprockets.somewhere,2013,Test 2
@@ -205,9 +211,9 @@ Company,Name,Email,Year,Level
 Pipe to File (Using example above):
 ```
 var fs = require("fs")
-var out = fs.createWriteStream("output.csv", {encoding: 'utf8'})
-var reader = csv.createReadStream({
-  data : items,
+var es = require("event-stream")
+
+var options = {
   fields : [
     {
       name : 'contact.company',
@@ -236,10 +242,10 @@ var reader = csv.createReadStream({
         }
       }
     }]
-  })
-
-reader.on('end', function() {
-  console.log("done")
-})
-reader.pipe(out)
+  }
+var out = fs.createWriteStream("output.csv", {encoding: 'utf8'})
+var readable = es.readArray(items)
+readable
+  .pipe(jsoncsv.csv(options))
+  .pipe(out)
 ```

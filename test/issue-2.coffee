@@ -1,11 +1,11 @@
-csv = require '../json-csv'
+jsoncsv = require '../index'
 should = require "should"
 
 describe "Issue 2", ->
   describe "When providing a filter function that returns null or undefined", ->
     before (done) ->
       @items = [ { s : 5 } ];
-      csv.toCSV { data: @items, fields: [ { name : 's', label : 's', filter : (v) -> return undefined; } ] }, (err,csv) =>
+      jsoncsv.csvBuffered @items, { fields: [ { name : 's', label : 's', filter : (v) -> return undefined; } ] }, (err,csv) =>
         @csv = csv
         @err = err
         done()
