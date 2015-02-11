@@ -51,7 +51,9 @@ readable_source
         //optional: filter to tranfsorm value before exporting
         filter : function(value) { return value; }
       }
-    ]
+    ],
+    // use a different field separator char
+    fieldSeparator : ';'
   }
 ```
 

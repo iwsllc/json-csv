@@ -24,6 +24,7 @@ exporter.prototype.csvBuffered = function(data, options, done) {
 exporter.prototype.csv = function(options) {
   var writtenHeader = false
   this.options = options || {}
+  this.fieldSeparator = this.options.fieldSeparator || ',';
   var self = this;
 
   return es.through(function write(data) {
@@ -37,7 +38,7 @@ exporter.prototype.csv = function(options) {
 }
 
 exporter.prototype.prepValue = function(arg, forceQuoted) {
-  var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0 || arg.indexOf('\n') >= 0
+  var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(this.fieldSeparator) >= 0 || arg.indexOf('\n') >= 0
   var result = arg.replace(/\"/g,'""')
   if (quoted)
     result = '"' + result + '"'
@@ -49,7 +50,7 @@ exporter.prototype.getHeaderRow = function() {
   var header = _.reduce(this.options.fields, function(line, field) {
     var label = field.label || field.field
     if (line)
-      line += ','
+      line += this.fieldSeparator
     line += self.prepValue(label)
     return line
   }, '', this)
@@ -62,7 +63,7 @@ exporter.prototype.getBodyRow = function(data) {
   var row = _.reduce(this.options.fields, function(line, field) {
     var label = field.label || field.field
     if (line)
-      line += ','
+      line += this.fieldSeparator
 
     var val = self.getValue(data, field.name)
     if (field.filter) {
