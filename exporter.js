@@ -37,7 +37,7 @@ exporter.prototype.csv = function(options) {
 }
 
 exporter.prototype.prepValue = function(arg, forceQuoted) {
-  var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0
+  var quoted = forceQuoted || arg.indexOf('"') >= 0 || arg.indexOf(',') >= 0 || arg.indexOf('\n') >= 0
   var result = arg.replace(/\"/g,'""')
   if (quoted)
     result = '"' + result + '"'
