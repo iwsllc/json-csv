@@ -4,6 +4,7 @@ var concat = require('concat-stream')
 
 var exporter = function(options) {
   this.options = options || {}
+  this.fieldSeparator = this.options.fieldSeparator || ',';
 }
 
 exporter.prototype.csvBuffered = function(data, options, done) {

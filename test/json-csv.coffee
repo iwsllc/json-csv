@@ -40,6 +40,24 @@ describe "JSON - CSV", ->
 
       it 'should convert list of data to csv', -> @result.should.equal('contact,amount\r\ntest,4.3\r\ntest2,5\r\n')
 
+    describe "When converting a buffer of data to CSV using fieldSeparator", ->
+      before (done) ->
+        @data = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
+        jsoncsv.csvBuffered @data,
+          fields : [
+            name : 'contact.name'
+            label : 'contact'
+          ,
+            name : 'contact.amount'
+            label : 'amount'
+          ],
+          fieldSeparator : ';'
+        , (err,csv) =>
+          @result = csv
+          done err
+
+      it 'should convert list of data to csv using fieldSeparator', -> @result.should.equal('contact;amount\r\ntest;4.3\r\ntest2;5\r\n')
+
     describe "When converting a buffer of data to CSV with field filters", ->
       before (done) ->
         @data = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
@@ -89,8 +107,13 @@ describe "JSON - CSV", ->
       done()
     it 'surround with quotes if any commas detected within the value', (done) ->
       test = 'someString,'
-      result = new exporter().prepValue test
+      result = new exporter({fieldSeparator: ','}).prepValue test
       result.should.equal '"someString,"'
+      done()
+    it 'surround with quotes if any fieldSeparator detected within the value', (done) ->
+      test = 'someString;'
+      result = new exporter({fieldSeparator: ';'}).prepValue test
+      result.should.equal '"someString;"'
       done()
     it 'surround with quotes if force quote option is true', (done) ->
       test = 'someString'
@@ -118,3 +141,4 @@ describe "JSON - CSV", ->
             done()
 
       it "should contain CSV result", -> @result.should.equal('contact,amount\r\ntest,4.3\r\ntest2,5\r\n')
+
