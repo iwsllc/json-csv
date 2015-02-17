@@ -50,11 +50,14 @@ exporter.prototype.getHeaderRow = function() {
   var self = this
   var header = _.reduce(this.options.fields, function(line, field) {
     var label = field.label || field.field
-    if (line)
+    if (line === 'START') {
+      line = '';
+    } else {
       line += this.fieldSeparator
+    }
     line += self.prepValue(label)
     return line
-  }, '', this)
+  }, 'START', this)
   header += '\r\n'
   return header
 }
@@ -63,9 +66,11 @@ exporter.prototype.getBodyRow = function(data) {
   var self = this
   var row = _.reduce(this.options.fields, function(line, field) {
     var label = field.label || field.field
-    if (line)
+    if (line === 'START') {
+      line = '';
+    } else {
       line += this.fieldSeparator
-
+    }
     var val = self.getValue(data, field.name)
     if (field.filter) {
       val = field.filter(val)
@@ -75,7 +80,7 @@ exporter.prototype.getBodyRow = function(data) {
       line += self.prepValue(val.toString(), quoted)
     }
     return line
-  }, '', this)
+  }, 'START', this)
 
   row += '\r\n'
   return row
