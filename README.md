@@ -8,24 +8,26 @@ Simple CSV export module that can export a rich JSON array of objects to CSV.
 Usage
 -----
 
-###Buffered###
-```
+### Buffered
+```js
 var jsoncsv = require('json-csv')
+
 jsoncsv.csvBuffered(data, options, callback)
 ```
+
  - data : Array of JS objects
  - callback : returns buffered result (see below)
 
-```
+```js
 var callback = function(err,csv) {
   //csv contains string of converted data in CSV format.
 }
 ```
 
-###Streaming###
+### Streaming
 When using the streaming API, you'll need to also stream data into it.
 
-```
+```js
 var jsoncsv = require('json-csv')
 
 var readable_source = <something readable that emits data row by row>
@@ -35,33 +37,33 @@ readable_source
 ```
 
 
-###Options###
-```
-  {
-    //field definitions for CSV export
-    fields :
-    [
-      {
-        //required: field name for source value
-        name : 'string',
+### Options
+```js
+{
+  //field definitions for CSV export
+  fields :
+  [
+    {
+      //required: field name for source value
+      name : 'string',
 
-        //required: column label for CSV header
-        label : 'string',
+      //required: column label for CSV header
+      label : 'string',
 
-        //optional: filter to tranfsorm value before exporting
-        filter : function(value) { return value; }
-      }
-    ],
-    // use a different field separator char
-    fieldSeparator : ';'
-  }
+      //optional: filter to tranfsorm value before exporting
+      filter : function(value) { return value; }
+    }
+  ],
+  // use a different field separator char
+  fieldSeparator : ';'
+}
 ```
 
 Example
 -------
 Simple structure with basic CSV conversion.
 
-```
+```js
 var jsoncsv = require('../json-csv')
 var items = [
   {
@@ -130,7 +132,7 @@ source
 ```
 
 Generates Output:
-```
+```csv
 Name,Email,Amount
 "fred",fred@somewhere,1.02
 "jo",jo@somewhere,1.02
@@ -140,7 +142,7 @@ Name,Email,Amount
 
 Here's a little more advanced sample that uses sub-structures and a filter for manipulating output for individual columns.
 
-```
+```js
 var jsoncsv = require('json-csv')
 var items = [
   {
@@ -200,18 +202,17 @@ jsoncsv.csvBuffered(items, {
   function(err,csv) {
     console.log(csv);
   });
-
 ```
 
 Generates Output:
-```
+```csv
 Company,Name,Email,Year,Level
 "Widgets, LLC",John Doe,john@widgets.somewhere,2013,Unknown
 "Sprockets, LLC",Jane Doe,jane@sprockets.somewhere,2013,Test 2
 ```
 
 Pipe to File (Using example above):
-```
+```js
 var fs = require("fs")
 var es = require("event-stream")
 
