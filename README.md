@@ -50,7 +50,7 @@ readable_source
       //required: column label for CSV header
       label : 'string',
 
-      //optional: filter to tranfsorm value before exporting
+      //optional: filter to transform value before exporting
       filter : function(value) { return value; }
     }
   ],
