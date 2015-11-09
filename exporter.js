@@ -94,6 +94,9 @@ exporter.prototype.getValue = function(data, arg) {
 }
 
 exporter.prototype.getValueIx = function(data, args, ix) {
+  if (!data)
+    return ''
+  
   var val = data[args[ix]]
   if (typeof val === 'undefined')
     return ''
