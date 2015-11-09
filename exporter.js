@@ -65,7 +65,6 @@ exporter.prototype.getHeaderRow = function() {
 exporter.prototype.getBodyRow = function(data) {
   var self = this
   var row = _.reduce(this.options.fields, function(line, field) {
-    var label = field.label || field.field
     if (line === 'START') {
       line = '';
     } else {
@@ -96,7 +95,7 @@ exporter.prototype.getValue = function(data, arg) {
 exporter.prototype.getValueIx = function(data, args, ix) {
   if (!data)
     return ''
-  
+
   var val = data[args[ix]]
   if (typeof val === 'undefined')
     return ''
