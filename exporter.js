@@ -48,16 +48,16 @@ exporter.prototype.prepValue = function(arg, forceQuoted) {
 
 exporter.prototype.getHeaderRow = function() {
   var self = this
-  var header = _.reduce(this.options.fields, function(line, field) {
+  var header = _.reduce(self.options.fields, function(line, field) {
     var label = field.label || field.field
     if (line === 'START') {
       line = '';
     } else {
-      line += this.fieldSeparator
+      line += self.fieldSeparator
     }
     line += self.prepValue(label)
     return line
-  }, 'START', this)
+  }, 'START')
   header += '\r\n'
   return header
 }
@@ -68,7 +68,7 @@ exporter.prototype.getBodyRow = function(data) {
     if (line === 'START') {
       line = '';
     } else {
-      line += this.fieldSeparator
+      line += self.fieldSeparator
     }
     var val = self.getValue(data, field.name)
     if (field.filter) {
@@ -79,7 +79,7 @@ exporter.prototype.getBodyRow = function(data) {
       line += self.prepValue(val.toString(), quoted)
     }
     return line
-  }, 'START', this)
+  }, 'START', self)
 
   row += '\r\n'
   return row
@@ -89,17 +89,23 @@ exporter.prototype.getValue = function(data, arg) {
   var args = arg.split('.')
   if (args.length > 0)
     return this.getValueIx(data, args, 0)
-  return data[args[0]];
+  return ""
 }
 
 exporter.prototype.getValueIx = function(data, args, ix) {
   if (!data)
     return ''
 
+  //for filtered fields using the whole row as a source.
+  //`this` is a keyword here; hoping not to conflict with existing fields.
+  if (args[0] === "this")
+    return data
+
   var val = data[args[ix]]
   if (typeof val === 'undefined')
     return ''
 
+  //walk the dot-notation recursively to get the remaining values.
   if ((args.length-1) > ix)
     return this.getValueIx(val, args, ix+1);
 
