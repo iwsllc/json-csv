@@ -49,7 +49,7 @@ exporter.prototype.prepValue = function(arg, forceQuoted) {
 exporter.prototype.getHeaderRow = function() {
   var self = this
   var header = _.reduce(self.options.fields, function(line, field) {
-    var label = field.label || field.field
+    var label = field.label || field.name
     if (line === 'START') {
       line = '';
     } else {
