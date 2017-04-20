@@ -26,10 +26,11 @@ exporter.prototype.csv = function(options) {
   var writtenHeader = false
   this.options = options || {}
   this.fieldSeparator = this.options.fieldSeparator || ',';
+  var ignoreHeader = this.options.ignoreHeader || false;
   var self = this;
 
   return es.through(function write(data) {
-    if (!writtenHeader)
+    if (!writtenHeader && !ignoreHeader)
     {
       this.emit('data', self.getHeaderRow())
       writtenHeader = true
