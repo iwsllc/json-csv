@@ -87,8 +87,7 @@ var items = [
     amount : 1.02
   }]
 
-jsoncsv.csvBuffered({
-  data : items,
+jsoncsv.csvBuffered(items, {
   fields : [
     {
         name : 'name',
