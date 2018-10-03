@@ -1,6 +1,6 @@
 {
   "name": "json-csv",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Export a richly structured, JSON array to CSV",
   "homepage": "https://github.com/IWSLLC/json-csv",
   "author": "Nathan Bridgewater <info@iws.io> (http://iws.io/)",
@@ -18,9 +18,9 @@
     "node": ">=0.10"
   },
   "devDependencies": {
-    "coffee-script": "^1.12.4",
-    "mocha": "^3.2.0",
-    "should": "^11.2.1"
+    "coffeescript": "^2.3.2",
+    "mocha": "^5.2.0",
+    "should": "^13.2.3"
   },
   "bugs": {
     "url": "https://github.com/IWSLLC/json-csv/issues"
@@ -29,12 +29,12 @@
     "test": "test"
   },
   "dependencies": {
-    "concat-stream": "^1.6.0",
-    "event-stream": "^3.3.4",
-    "lodash": "^4.17.4"
+    "concat-stream": "^1.6.2",
+    "event-stream": "^4.0.1",
+    "lodash": "^4.17.11"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "./bin/t"
   },
   "license": "BSD-3"
 }

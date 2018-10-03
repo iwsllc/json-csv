@@ -1,3 +1,6 @@
 -R spec
 -u bdd
---compilers coffee:coffee-script/register
+--recursive
+--colors
+--require coffeescript/register
+--exit
