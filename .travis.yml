@@ -4,7 +4,7 @@ node_js:
 - '8'
 - '6'
 - '0.10'
-script: "mocha"
+script: "npm test"
 cache:
   directories:
     - node_modules
