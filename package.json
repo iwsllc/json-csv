@@ -1,6 +1,6 @@
 {
   "name": "json-csv",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Export a richly structured, JSON array to CSV",
   "homepage": "https://github.com/IWSLLC/json-csv",
   "author": "Nathan Bridgewater <info@iws.io> (http://iws.io/)",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "concat-stream": "^1.6.2",
-    "event-stream": "^3.3.4",
+    "event-stream": "3.3.4",
     "lodash": "^4.17.11"
   },
   "scripts": {
