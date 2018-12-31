@@ -33,3 +33,17 @@ describe "OR || operator", ->
 					{ name : 'anotherData', label : 'anotherColumn' } ], fieldSeparator : ';'}, (err,csv)->
 			csv.should.equal 'combinedCol;otherColumn;anotherColumn\r\nfoo1;baz1;\r\nfoo2;baz2;\r\nfoo3;baz3;daz3\r\n'
 			done()
+
+	it "should merge column1, 2 or 3 into combinedCol ignoring empty column (from 3 to single column with other columns)", (done) ->
+		arrayItems = [ 
+			{ column1 : 'foo1', otherData: 'baz1'},
+				{ column1 : 'fooIgnored', column2 : 'foo2', otherData: 'baz2'},
+					{ column2 : '', column3 : 'foo3', otherData: 'baz3'}, #--> will ignore empty column value
+						{ column3 : 'foo4', otherData: 'baz4', anotherData: 'daz4'} ]; #--> will parse normaly
+
+		jsoncsv.csvBuffered arrayItems, { fields: [ 
+			{ name : 'column1||column2||column3', label : 'combinedCol' },
+				{ name : 'otherData', label : 'otherColumn' },
+					{ name : 'anotherData', label : 'anotherColumn' } ], fieldSeparator : ';'}, (err,csv)->
+			csv.should.equal 'combinedCol;otherColumn;anotherColumn\r\nfoo1;baz1;\r\nfoo2;baz2;\r\nfoo3;baz3;\r\nfoo4;baz4;daz4\r\n'
+			done()
