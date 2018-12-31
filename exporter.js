@@ -72,6 +72,24 @@ exporter.prototype.getBodyRow = function(data) {
       line += self.fieldSeparator
     }
     var val = self.getValue(data, field.name)
+    // vinicioslc support to OR || operator  allowing multiples names to the same column
+    // the code will use the last non null and non empty value
+    if (field.name.includes('||')) {
+      // by default column is empty
+      val = ''
+      let fields = field.name.split('||');
+      // for each alternative
+      fields.forEach(field => {
+        // get value and associate
+        let fieldVal = self.getValue(data, field)
+        // remove whitespaces and check if non null before assign
+        if (typeof val !== 'undefined' && val !== null && fieldVal.trim().length > 0 && fieldVal.trim() != "") {
+          val = fieldVal
+        }
+        //do this for every field
+      });
+    }
+
     if (field.filter) {
       val = field.filter(val)
     }
