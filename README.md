@@ -251,3 +251,80 @@ readable
   .pipe(jsoncsv.csv(options))
   .pipe(out)
 ```
+
+
+
+### "OR" || operator for column merging
+
+Example using "OR" || operator to combine two object attributes at once column.
+
+```js
+var jsoncsv = require("json-csv");
+var items = [
+  {
+    name: "White Shoes",
+    price: 12.10,
+    category1: "Apparel",
+    category2: "Bottom Apparel",
+    category3: "Shoes",
+  },
+  {
+    name: "Grey Pants",
+    price: 50.30,
+    category1: "Apparel",
+    category2: "Bottom Apparel",
+    category3: "Pants",
+  },
+  {
+    name: "Black Belt",
+    price: 5.30,
+    category1: "Apparel",
+    category2: "Belts",
+  },
+  {
+    name: "Normal Glasses",
+    price: 10.20,
+    category1: "Glasses",
+  },
+  {
+    name: "Dark Glasses",
+    price: 20.30,
+    category1: "",
+    category2: "Sunglasses",
+  },
+];
+
+jsoncsv.csvBuffered(
+  items,
+  {
+    fields: [
+      {
+        name: "name",
+        label: "Name",
+      },
+      {
+        name: "price",
+        label: "Price",
+      },
+      {
+        name: "category1||category2||category3",
+        label: "Category",
+      },
+    ],
+  },
+  function(err, csv) {
+    console.log(csv);
+  }
+);
+```
+
+Generates Output:
+
+```csv
+Name,             Price,  Category
+"White Shoes",    12.10,  Shoes
+"Grey Pants",     50.30,  Pants
+"Black Belt",     10.30,  Belts
+"Normal Glasses", 10.20,  Glasses
+"Dark Glasses",   20.30,  Sunglasses
+```
