@@ -7,9 +7,10 @@ describe 'No Header Row', ->
       { k: 'foo' }
       { k: 'bar' }
     ]
-    jsoncsv.csvBuffered items, {
+    jsoncsv.buffered items, {
       ignoreHeader: true
       fields: [ { name: 'k' } ]  # Label not needed
     }, (err, csv) ->
       csv.should.equal 'foo\r\nbar\r\n'
       done()
+    return

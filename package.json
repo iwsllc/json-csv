@@ -18,8 +18,9 @@
     "node": ">=0.10"
   },
   "devDependencies": {
-    "coffeescript": "^2.3.2",
-    "mocha": "^5.2.0",
+    "coffeescript": "^2.4.1",
+    "debug": "^4.1.1",
+    "mocha": "^6.2.2",
     "should": "^13.2.3"
   },
   "bugs": {
@@ -29,9 +30,8 @@
     "test": "test"
   },
   "dependencies": {
-    "concat-stream": "^1.6.2",
-    "event-stream": "3.3.4",
-    "lodash": "^4.17.11"
+    "concat-stream": "^2.0.0",
+    "lodash": "^4.17.15"
   },
   "scripts": {
     "test": "./bin/t"
