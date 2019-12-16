@@ -10,30 +10,39 @@ Usage
 
 ### Buffered
 ```js
-var jsoncsv = require('json-csv')
+const jsoncsv = require('json-csv')
+jsoncsv.buffered(data, options) //returns Promise
 
-jsoncsv.csvBuffered(data, options, callback)
+//optionally, you can use the callback
+jsoncsv.buffered(data, options, (err, csv) => {...}))
 ```
-
- - data : Array of JS objects
- - callback : returns buffered result (see below)
+ - data: Array of JS objects
+ - options: {fields: [], ...}
+ - callback: returns buffered result (see below)
 
 ```js
-var callback = function(err,csv) {
-  //csv contains string of converted data in CSV format.
+let callback = function(err, csv) {
+  //csv contains Utf8 (or encoding of your choice) string of converted data in CSV format.
 }
 ```
 
 ### Streaming
-When using the streaming API, you'll need to also stream data into it.
+When using the streaming API, you can pipe data to it in object mode.
 
 ```js
-var jsoncsv = require('json-csv')
+const jsoncsv = require('json-csv')
 
-var readable_source = <something readable that emits data row by row>
-readable_source
-  .pipe(jsoncsv.csv(options))
+let readable = some_readable_source //<readable source in object mode>
+readable
+  .pipe(jsoncsv.stream(options)) //transforms to Utf8 string and emits lines
   .pipe(something_else_writable)
+
+//optionally, you can use the callback
+jsoncsv.stream(options, (err, streamToCsv) => {
+  readable
+    .pipe(streamToCsv) //transforms to Utf8 string and emits lines
+    .pipe(something_else_writable)
+})
 ```
 
 
@@ -54,8 +63,12 @@ readable_source
       filter : function(value) { return value; }
     }
   ],
-  // use a different field separator char
-  fieldSeparator : ';'
+
+  // Other default options:
+  fieldSeparator: ","
+  ,ignoreHeader: false
+  ,buffered: true
+  ,encoding: "utf8"
 }
 ```
 
@@ -64,8 +77,8 @@ Example
 Simple structure with basic CSV conversion.
 
 ```js
-var jsoncsv = require('../json-csv')
-var items = [
+const jsoncsv = require('json-csv')
+let items = [
   {
     name : 'fred',
     email : 'fred@somewhere',
@@ -87,7 +100,7 @@ var items = [
     amount : 1.02
   }]
 
-jsoncsv.csvBuffered(items, {
+jsoncsv.buffered(items, {
   fields : [
     {
         name : 'name',
@@ -103,12 +116,12 @@ jsoncsv.csvBuffered(items, {
         label : 'Amount'
     }
   ]},
-  function(err,csv) {
+  (err, csv) => {
     console.log(csv);
-});
+  });
 
 //OR Streaming
-var options = {
+let options = {
   fields : [
     {
         name : 'name',
@@ -124,9 +137,8 @@ var options = {
         label : 'Amount'
     }
   ]}
-var source = es.readArray(items)
-source
-  .pipe(jsoncsv.csv(options))
+Readable.from(items) //node 12
+  .pipe(jsoncsv.stream(options))
   .pipe(process.stdout)
 ```
 
@@ -142,8 +154,8 @@ Name,Email,Amount
 Here's a little more advanced sample that uses sub-structures and a filter for manipulating output for individual columns.
 
 ```js
-var jsoncsv = require('json-csv')
-var items = [
+const jsoncsv = require('json-csv')
+let items = [
   {
     contact : {
       company : 'Widgets, LLC',
@@ -168,7 +180,7 @@ var items = [
   }
 ];
 
-jsoncsv.csvBuffered(items, {
+jsoncsv.buffered(items, {
   fields : [
     {
       name : 'contact.company',
@@ -198,7 +210,7 @@ jsoncsv.csvBuffered(items, {
       }
     }]
   },
-  function(err,csv) {
+  function(err, csv) {
     console.log(csv);
   });
 ```
@@ -212,10 +224,9 @@ Company,Name,Email,Year,Level
 
 Pipe to File (Using example above):
 ```js
-var fs = require("fs")
-var es = require("event-stream")
+const fs = require("fs")
 
-var options = {
+let options = {
   fields : [
     {
       name : 'contact.company',
@@ -245,10 +256,10 @@ var options = {
       }
     }]
   }
-var out = fs.createWriteStream("output.csv", {encoding: 'utf8'})
-var readable = es.readArray(items)
+let out = fs.createWriteStream("output.csv", {encoding: 'utf8'})
+let readable = Readable.from(items) //node 12
 readable
-  .pipe(jsoncsv.csv(options))
+  .pipe(jsoncsv.stream(options))
   .pipe(out)
 ```
 
@@ -259,8 +270,8 @@ readable
 Example using "OR" || operator to combine two object attributes at once column.
 
 ```js
-var jsoncsv = require("json-csv");
-var items = [
+const jsoncsv = require("json-csv");
+let items = [
   {
     name: "White Shoes",
     price: 12.10,
@@ -292,9 +303,9 @@ var items = [
     category1: "",
     category2: "Sunglasses",
   },
-];
+]
 
-jsoncsv.csvBuffered(
+jsoncsv.buffered(
   items,
   {
     fields: [
@@ -311,11 +322,10 @@ jsoncsv.csvBuffered(
         label: "Category",
       },
     ],
-  },
-  function(err, csv) {
+  }, (err, csv) => {
     console.log(csv);
   }
-);
+)
 ```
 
 Generates Output:

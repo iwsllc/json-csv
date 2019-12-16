@@ -1,8 +1,8 @@
-var csv    = require('../index')
-var es     = require("event-stream")
-var concat = require("concat-stream")
+const csv    = require('../index')
+const concat = require("concat-stream")
+const bufferReader = require("../buffer-reader")
 
-var items = [
+let items = [
   {
     name : 'fred',
     email : 'fred@somewhere',
@@ -24,7 +24,7 @@ var items = [
     amount : 1.02
   }]
 
-var options = {
+let options = {
   fields : [
     {
         name : 'name',
@@ -41,7 +41,6 @@ var options = {
     }
   ]}
 
-var source = es.readArray(items)
-source
-  .pipe(csv.csv(options))
+bufferReader(items)
+  .pipe(csv.stream(options))
   .pipe(process.stdout)

@@ -1,5 +1,5 @@
-var csv = require('../index')
-var items = [
+const csv = require('../index')
+let items = [
   {
     downloaded : false,
     contact : {
@@ -24,9 +24,8 @@ var items = [
       level : 2
     }
   }
-];
-
-csv.csvBuffered(items, {
+]
+let options = {
   fields : [
     {
       name : 'contact.company',
@@ -54,8 +53,14 @@ csv.csvBuffered(items, {
           default : return 'Unknown'
         }
       }
-    }]
-  },
-  function(err,csv) {
-    console.log(csv);
-  });
+    }
+  ]
+}
+
+csv.buffered(items, options)
+  .then(csv => {
+    console.log(csv)
+  })
+  .catch(err => {
+    console.log(err)
+  })
