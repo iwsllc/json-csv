@@ -4,7 +4,7 @@ const _get = require("lodash/get")
 const _defaults = require("lodash/defaults")
 const _assignIn = require("lodash/assignIn")
 const _reduce = require("lodash/reduce")
-const debug = require("debug")("json-csv:exporter")
+//const debug = require("debug")("json-csv:exporter")
 const bufferReader = require("./buffer-reader")
 
 class CsvExporter {
@@ -36,17 +36,17 @@ class CsvExporter {
     let transformer = new Transform({
       writableObjectMode: true,
       transform(chunk, encoding, callback) {
-        debug(`incoming chunk: ${require('util').inspect(chunk)}`)
-        debug(encoding)
+        //debug(`incoming chunk: ${require('util').inspect(chunk)}`)
+        //debug(encoding)
         if (!writtenHeader && !ignoreHeader)
         {
           writtenHeader = true
           let header = self.getHeaderRow(fields)
-          debug(`writing header ${header}`)
+          //debug(`writing header ${header}`)
           this.push(header)
         }
         let row = self.getBodyRow(chunk, fields)
-        debug(`writing row ${require("util").inspect(row)}`)
+        //debug(`writing row ${require("util").inspect(row)}`)
         this.push(row)
         callback()
       }
