@@ -34,7 +34,7 @@
     "lodash": "^4.17.15"
   },
   "scripts": {
-    "test": "./bin/t"
+    "test": "mocha \"./test/**/*.{js,coffee}\" $@"
   },
   "license": "BSD-3"
 }
