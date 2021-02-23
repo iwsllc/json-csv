@@ -1,5 +1,5 @@
 {
-  "name": "@iwsio/json-csv",
+  "name": "json-csv",
   "version": "3.0.4",
   "description": "Export a richly structured, JSON array to CSV",
   "homepage": "https://github.com/IWSLLC/json-csv",
