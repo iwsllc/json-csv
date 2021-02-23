@@ -5,8 +5,6 @@ json-csv
 
 Simple CSV export module that can export a rich JSON array of objects to CSV. (Formerly [json-csv](https://www.npmjs.com/package/json-csv))
 
-Moved to: [@iwsio/json-csv](https://www.npmjs.com/package/@iwsio/json-csv)
-
 Usage
 -----
 
