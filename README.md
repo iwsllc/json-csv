@@ -3,7 +3,7 @@ json-csv
 
 [![Build Status](https://travis-ci.com/IWSLLC/json-csv.svg?branch=main)](https://travis-ci.com/IWSLLC/json-csv)
 
-Simple CSV export module that can export a rich JSON array of objects to CSV. (Formerly [json-csv](https://www.npmjs.com/package/json-csv))
+Simple CSV export module that can export a rich JSON array of objects to CSV. 
 
 Usage
 -----
