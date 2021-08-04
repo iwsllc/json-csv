@@ -1,46 +1,46 @@
-const csv    = require('../index')
-const concat = require("concat-stream")
-const bufferReader = require("../buffer-reader")
+const csv = require('../src/index')
+const {Readable} = require('stream')
 
 let items = [
   {
-    name : 'fred',
-    email : 'fred@somewhere',
-    amount : 1.02
+    name: 'fred',
+    email: 'fred@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo',
+    email: 'jo@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo with a comma,',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo with a comma,',
+    email: 'jo@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo with a quote"',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo with a quote"',
+    email: 'jo@somewhere',
+    amount: 1.02,
   }]
 
 let options = {
-  fields : [
+  fields: [
     {
-        name : 'name',
-        label : 'Name',
-        quoted : true
+      name: 'name',
+      label: 'Name',
+      quoted: true,
     },
     {
-        name : 'email',
-        label : 'Email'
+      name: 'email',
+      label: 'Email',
     },
     {
-        name : 'amount',
-        label : 'Amount'
-    }
-  ]}
+      name: 'amount',
+      label: 'Amount',
+    },
+  ],
+}
 
-bufferReader(items)
+Readable.from(items)
   .pipe(csv.stream(options))
   .pipe(process.stdout)

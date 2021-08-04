@@ -1,14 +1,13 @@
 language: node_js
 node_js:
-- '14'
-- '12'
-- '10'
-- '8'
+  - '16'
+  - '14'
+  - '12'
+  - '10'
 script: "npm test"
 cache:
   directories:
     - node_modules
 notifications:
   email : false
-dist: xenial
-os: linux
+sudo: false

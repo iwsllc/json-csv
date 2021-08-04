@@ -1,3 +1,0 @@
-#! /bin/sh -e
-export PATH=./node_modules/.bin:$PATH
-mocha "./test/**/*.{js,coffee}" $@

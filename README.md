@@ -1,32 +1,28 @@
 json-csv
 ========
 
-[![Build Status](https://travis-ci.com/IWSLLC/json-csv.svg?branch=main)](https://travis-ci.com/IWSLLC/json-csv)
+[![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
 
 Simple CSV export module that can export a rich JSON array of objects to CSV. 
 
-Usage
------
+## Update `4.0.0`
+I decided to update this repo and drop unnecessary code. Version `3.0.1` already was constrained to Node v6; but by breaking some eggs and moving to >= v10, I'm able to drop some dependencies and remove some unnecessary code (i.e. buffered-reader -> Readable.from). I decided to bump the major version with this breaking change. The API itself hasn't changed at all and still works as-is.
 
-### Buffered
+# Usage
+## Buffered
 ```js
 const jsoncsv = require('json-csv')
-jsoncsv.buffered(data, options) //returns Promise
+
+let csv = await jsoncsv.buffered(data, options) //returns Promise
 
 //optionally, you can use the callback
 jsoncsv.buffered(data, options, (err, csv) => {...}))
 ```
  - data: Array of JS objects
  - options: {fields: [], ...}
- - callback: returns buffered result (see below)
+ - optional callback: returns string result
 
-```js
-let callback = function(err, csv) {
-  //csv contains Utf8 (or encoding of your choice) string of converted data in CSV format.
-}
-```
-
-### Streaming
+## Streaming
 When using the streaming API, you can pipe data to it in object mode.
 
 ```js
@@ -36,12 +32,6 @@ let readable = some_readable_source //<readable source in object mode>
 readable
   .pipe(jsoncsv.stream(options)) //transforms to Utf8 string and emits lines
   .pipe(something_else_writable)
-
-//optionally, you can use the callback
-jsoncsv.stream(options, (err, streamToCsv) => {
-  readable
-    .pipe(streamToCsv) //transforms to Utf8 string and emits lines
-    .pipe(something_else_writable)
 })
 ```
 
@@ -54,96 +44,104 @@ jsoncsv.stream(options, (err, streamToCsv) => {
   [
     {
       //required: field name for source value
-      name : 'string',
+      name: 'string',
 
       //required: column label for CSV header
-      label : 'string',
+      label: 'string',
 
       //optional: filter to transform value before exporting
-      filter : function(value) { return value; }
+      filter: function(value) { return value; }
     }
   ],
 
   // Other default options:
   fieldSeparator: ","
   ,ignoreHeader: false
-  ,buffered: true
   ,encoding: "utf8"
 }
 ```
 
-Example
--------
-Simple structure with basic CSV conversion.
+# Examples
 
-```js
-const jsoncsv = require('json-csv')
+## Given these items and options: 
+
+```javascript
 let items = [
   {
-    name : 'fred',
-    email : 'fred@somewhere',
-    amount : 1.02
+    name: 'fred',
+    email: 'fred@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo',
+    email: 'jo@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo with a comma,',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo with a comma,',
+    email: 'jo@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo with a quote"',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo with a quote"',
+    email: 'jo@somewhere',
+    amount: 1.02,
   }]
 
-jsoncsv.buffered(items, {
-  fields : [
-    {
-        name : 'name',
-        label : 'Name',
-        quoted : true
-    },
-    {
-        name : 'email',
-        label : 'Email'
-    },
-    {
-        name : 'amount',
-        label : 'Amount'
-    }
-  ]},
-  (err, csv) => {
-    console.log(csv);
-  });
-
-//OR Streaming
 let options = {
-  fields : [
+  fields: [
     {
-        name : 'name',
-        label : 'Name',
-        quoted : true
+      name: 'name',
+      label: 'Name',
+      quoted: true,
     },
     {
-        name : 'email',
-        label : 'Email'
+      name: 'email',
+      label: 'Email',
     },
     {
-        name : 'amount',
-        label : 'Amount'
-    }
-  ]}
-Readable.from(items) //node 12
-  .pipe(jsoncsv.stream(options))
+      name: 'amount',
+      label: 'Amount',
+    },
+  ],
+}
+```
+
+## Buffered
+
+This method will take an array of data and convert it into a CSV string all in runtime memory. This works well for small amounts of data.
+
+```javascript
+const jsoncsv = require('json-csv')
+async function writeCsv() {
+  try {
+    let csv = await jsoncsv.buffered(items, options)
+    console.log(csv)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+writeCsv()
+```
+
+## Streamed
+
+Here, we want to pipe data from a source to the converter, write the headers and then pipe it to an output (one row at a time). This works really well for large amounts of data like exporting from a MongoDb query directly. 
+
+
+```javascript
+const jsoncsv = require('json-csv')
+const {Readable} = require('stream')
+
+Readable.from(items)
+  .pipe(csv.stream(options))
   .pipe(process.stdout)
 ```
 
-Generates Output:
-```csv
+## Output
+
+```
 Name,Email,Amount
 "fred",fred@somewhere,1.02
 "jo",jo@somewhere,1.02
@@ -151,190 +149,88 @@ Name,Email,Amount
 "jo with a quote""",jo@somewhere,1.02
 ```
 
-Here's a little more advanced sample that uses sub-structures and a filter for manipulating output for individual columns.
 
-```js
-const jsoncsv = require('json-csv')
-let items = [
+## Advanced Example
+
+```javascript
+const items = [
   {
-    contact : {
-      company : 'Widgets, LLC',
-      name : 'John Doe',
-      email : 'john@widgets.somewhere'
+    downloaded: false,
+    contact: {
+      company: 'Widgets, LLC',
+      name: 'John Doe',
+      email: 'john@widgets.somewhere',
     },
-    registration : {
-      year : 2013,
-      level : 3
-    }
+    registration: {
+      year: 2013,
+      level: 3,
+    },
   },
   {
-    contact : {
-      company : 'Sprockets, LLC',
-      name : 'Jane Doe',
-      email : 'jane@sprockets.somewhere'
+    downloaded: true,
+    contact: {
+      company: 'Sprockets, LLC',
+      name: 'Jane Doe',
+      email: 'jane@sprockets.somewhere',
     },
-    registration : {
-      year : 2013,
-      level : 2
-    }
-  }
-];
-
-jsoncsv.buffered(items, {
-  fields : [
-    {
-      name : 'contact.company',
-      label : 'Company'
+    registration: {
+      year: 2013,
+      level: 2,
     },
-    {
-      name : 'contact.name',
-      label : 'Name'
-    },
-    {
-      name : 'contact.email',
-      label : 'Email'
-    },
-    {
-      name : 'registration.year',
-      label : 'Year'
-    },
-    {
-      name : 'registration.level',
-      label : 'Level',
-      filter : function(value) {
-        switch(value) {
-          case 1 : return 'Test 1'
-          case 2 : return 'Test 2'
-          default : return 'Unknown'
-        }
-      }
-    }]
-  },
-  function(err, csv) {
-    console.log(csv);
-  });
-```
-
-Generates Output:
-```csv
-Company,Name,Email,Year,Level
-"Widgets, LLC",John Doe,john@widgets.somewhere,2013,Unknown
-"Sprockets, LLC",Jane Doe,jane@sprockets.somewhere,2013,Test 2
-```
-
-Pipe to File (Using example above):
-```js
-const fs = require("fs")
-
-let options = {
-  fields : [
-    {
-      name : 'contact.company',
-      label : 'Company'
-    },
-    {
-      name : 'contact.name',
-      label : 'Name'
-    },
-    {
-      name : 'contact.email',
-      label : 'Email'
-    },
-    {
-      name : 'registration.year',
-      label : 'Year'
-    },
-    {
-      name : 'registration.level',
-      label : 'Level',
-      filter : function(value) {
-        switch(value) {
-          case 1 : return 'Test 1'
-          case 2 : return 'Test 2'
-          default : return 'Unknown'
-        }
-      }
-    }]
-  }
-let out = fs.createWriteStream("output.csv", {encoding: 'utf8'})
-let readable = Readable.from(items) //node 12
-readable
-  .pipe(jsoncsv.stream(options))
-  .pipe(out)
-```
-
-
-
-### "OR" || operator for column merging
-
-Example using "OR" || operator to combine two object attributes at once column.
-
-```js
-const jsoncsv = require("json-csv");
-let items = [
-  {
-    name: "White Shoes",
-    price: 12.10,
-    category1: "Apparel",
-    category2: "Bottom Apparel",
-    category3: "Shoes",
-  },
-  {
-    name: "Grey Pants",
-    price: 50.30,
-    category1: "Apparel",
-    category2: "Bottom Apparel",
-    category3: "Pants",
-  },
-  {
-    name: "Black Belt",
-    price: 5.30,
-    category1: "Apparel",
-    category2: "Belts",
-  },
-  {
-    name: "Normal Glasses",
-    price: 10.20,
-    category1: "Glasses",
-  },
-  {
-    name: "Dark Glasses",
-    price: 20.30,
-    category1: "",
-    category2: "Sunglasses",
   },
 ]
+const options = {
+  fields: [
+    {
+      name: 'contact.company',
+      label: 'Company',
+    },
+    {
+      name: 'contact.name',
+      label: 'Name',
+    },
+    {
+      name: 'contact.email',
+      label: 'Email',
+    },
+    {
+      name: 'downloaded',
+      label: "Downloaded",
+      transform: (v) => v ? 'downloaded' : 'pending',
+    },
+    {
+      name: 'registration.year',
+      label: 'Year',
+    },
+    {
+      name: 'registration.level',
+      label: 'Level',
+      transform: (v) => {
+        switch (v) {
+          case 1: return 'Test 1'
+          case 2: return 'Test 2'
+          default: return 'Unknown'
+        }
+      },
+    },
+  ],
+}
 
-jsoncsv.buffered(
-  items,
-  {
-    fields: [
-      {
-        name: "name",
-        label: "Name",
-      },
-      {
-        name: "price",
-        label: "Price",
-      },
-      {
-        name: "category1||category2||category3",
-        label: "Category",
-      },
-    ],
-  }, (err, csv) => {
-    console.log(csv);
+async function writeCsv() {
+  try {
+    let result = await csv.buffered(items, options)
+    console.log(result)
+  } catch (err) {
+    console.error(err)
   }
-)
+}
+
+writeCsv()
 ```
 
-Generates Output:
-
-```csv
-Name,             Price,  Category
-"White Shoes",    12.10,  Shoes
-"Grey Pants",     50.30,  Pants
-"Black Belt",     10.30,  Belts
-"Normal Glasses", 10.20,  Glasses
-"Dark Glasses",   20.30,  Sunglasses
+### Output
+```
+Company,Name,Email,Downloaded,Year,Level
+"Widgets, LLC",John Doe,john@widgets.somewhere,pending,2013,Unknown
+"Sprockets, LLC",Jane Doe,jane@sprockets.somewhere,downloaded,2013,Test 2
 ```
