@@ -1,0 +1,14 @@
+{
+  "reporter": "spec",
+    "ui": "bdd",
+    "recursive": true,
+    "colors": true,
+    "exit": true,
+    "require": [
+      "coffeescript/register"
+    ],
+    "extension": [
+      "js",
+      "coffee"
+    ]
+}

@@ -1,9 +1,10 @@
 should       = require "should"
-jsoncsv      = require("../index")
-concat       = require('concat-stream')
+jsoncsv      = require("../src/index")
+StringWriter       = require('../src/string-writer')
 Exporter     = jsoncsv.Exporter
 stream       = require "stream"
-bufferReader = require "../buffer-reader"
+
+Readable = stream.Readable
 
 describe "JSON - CSV", ->
   describe "Value Evaluator", ->
@@ -136,10 +137,12 @@ describe "JSON - CSV", ->
           label : 'amount'
         ]
         @result = ''
-        bufferReader(@data)
+        writer = new StringWriter()
+        Readable.from(@data)
           .pipe(jsoncsv.csv {fields : @fields})
-          .pipe concat (buffer) =>
-            @result = buffer
+          .pipe writer
+          .on 'finish', () =>
+            @result = writer.data
             done()
 
       it "should contain CSV result", -> @result.should.equal('contact,amount\r\ntest,4.3\r\ntest2,5\r\n')

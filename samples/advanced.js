@@ -1,66 +1,75 @@
-const csv = require('../index')
-let items = [
+const csv = require('../src/index')
+
+const items = [
   {
-    downloaded : false,
-    contact : {
-      company : 'Widgets, LLC',
-      name : 'John Doe',
-      email : 'john@widgets.somewhere'
+    downloaded: false,
+    contact: {
+      company: 'Widgets, LLC',
+      name: 'John Doe',
+      email: 'john@widgets.somewhere',
     },
-    registration : {
-      year : 2013,
-      level : 3
-    }
+    registration: {
+      year: 2013,
+      level: 3,
+    },
   },
   {
-    downloaded : false,
-    contact : {
-      company : 'Sprockets, LLC',
-      name : 'Jane Doe',
-      email : 'jane@sprockets.somewhere'
+    downloaded: true,
+    contact: {
+      company: 'Sprockets, LLC',
+      name: 'Jane Doe',
+      email: 'jane@sprockets.somewhere',
     },
-    registration : {
-      year : 2013,
-      level : 2
-    }
-  }
+    registration: {
+      year: 2013,
+      level: 2,
+    },
+  },
 ]
-let options = {
-  fields : [
+const options = {
+  fields: [
     {
-      name : 'contact.company',
-      label : 'Company'
+      name: 'contact.company',
+      label: 'Company',
     },
     {
-      name : 'contact.name',
-      label : 'Name'
+      name: 'contact.name',
+      label: 'Name',
     },
     {
-      name : 'contact.email',
-      label : 'Email'
+      name: 'contact.email',
+      label: 'Email',
     },
     {
-      name : 'registration.year',
-      label : 'Year'
+      name: 'downloaded',
+      label: "Downloaded",
+      transform: (v) => v ? 'downloaded' : 'pending',
     },
     {
-      name : 'registration.level',
-      label : 'Level',
-      filter : function(value) {
-        switch(value) {
-          case 1 : return 'Test 1'
-          case 2 : return 'Test 2'
-          default : return 'Unknown'
+      name: 'registration.year',
+      label: 'Year',
+    },
+    {
+      name: 'registration.level',
+      label: 'Level',
+      transform: function(value) {
+        switch (value) {
+          case 1: return 'Test 1'
+          case 2: return 'Test 2'
+          default: return 'Unknown'
         }
-      }
-    }
-  ]
+      },
+    },
+  ],
 }
 
-csv.buffered(items, options)
-  .then(csv => {
-    console.log(csv)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+async function writeCsv() {
+  try {
+    let result = await csv.buffered(items, options)
+    console.log(result)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+writeCsv()

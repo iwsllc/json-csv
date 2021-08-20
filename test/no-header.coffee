@@ -1,4 +1,4 @@
-jsoncsv = require '../index'
+jsoncsv = require '../src/index'
 should = require 'should'
 
 describe 'No Header Row', ->

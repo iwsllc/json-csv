@@ -1,49 +1,53 @@
-const csv = require('../index')
+const csv = require('../src/index')
+
 let items = [
   {
-    name : 'fred',
-    email : 'fred@somewhere',
-    amount : 1.02
+    name: 'fred',
+    email: 'fred@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo',
+    email: 'jo@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo with a comma,',
-    email : 'jo@somewhere',
-    amount : 1.02
+    name: 'jo with a comma,',
+    email: 'jo@somewhere',
+    amount: 1.02,
   },
   {
-    name : 'jo with a quote"',
-    email : 'jo@somewhere',
-    amount : 1.02
-  }
+    name: 'jo with a quote"',
+    email: 'jo@somewhere',
+    amount: 1.02,
+  },
 ]
 
 let options = {
-  fields : [
+  fields: [
     {
-        name : 'name',
-        label : 'Name',
-        quoted : true
+      name: 'name',
+      label: 'Name',
+      quoted: true,
     },
     {
-        name : 'email',
-        label : 'Email'
+      name: 'email',
+      label: 'Email',
     },
     {
-        name : 'amount',
-        label : 'Amount'
-    }
-  ]
+      name: 'amount',
+      label: 'Amount',
+    },
+  ],
 }
 
-csv.buffered(items, options)
-  .then(csv => {
-    console.log(csv)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+async function writeCsv() {
+  try {
+    let result = await csv.buffered(items, options)
+    console.log(result)
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+writeCsv()
