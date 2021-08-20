@@ -121,7 +121,7 @@ class CsvExporter {
 
   getValue(data, arg) {
     var args = arg.split('.')
-    if (args.length > 0) { return this.getValueIx(data, args, 0) }
+    if (args.length > 0) return this.getValueIx(data, args, 0)
     return ''
   }
 
