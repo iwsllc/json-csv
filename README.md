@@ -149,7 +149,7 @@ Name,Email,Amount
 
 
 ## Advanced Example
-Here, you can see we're using a deeper set of objects for our source data and accomodating by using dot notation in the field definitions. 
+Here, you can see we're using a deeper set of objects for our source data and accommodating by using dot notation in the field definitions. 
 
 ```javascript
 const items = [
