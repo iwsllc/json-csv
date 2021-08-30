@@ -108,7 +108,6 @@ let options = {
 ```
 
 ## Buffered
-
 This method will take an array of data and convert it into a CSV string all in runtime memory. This works well for small amounts of data.
 
 ```javascript
@@ -126,7 +125,6 @@ writeCsv()
 ```
 
 ## Streamed
-
 Here, we want to pipe data from a source to the converter, write the headers and then pipe it to an output (one row at a time). This works really well for large amounts of data like exporting from a MongoDb query directly. 
 
 
@@ -151,6 +149,7 @@ Name,Email,Amount
 
 
 ## Advanced Example
+Here, you can see we're using a deeper set of objects for our source data and accomodating by using dot notation in the field definitions. 
 
 ```javascript
 const items = [
@@ -182,7 +181,7 @@ const items = [
 const options = {
   fields: [
     {
-      name: 'contact.company',
+      name: 'contact.company', // uses dot notation
       label: 'Company',
     },
     {
