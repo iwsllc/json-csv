@@ -6,7 +6,7 @@ json-csv
 Simple CSV export module that can export a rich JSON array of objects to CSV. 
 
 ## Update `4.0.0`
-I decided to update this repo and drop unnecessary code. Version `3.0.1` already was constrained to Node v6; but by breaking some eggs and moving to >= v10, I'm able to drop some dependencies and remove some unnecessary code (i.e. buffered-reader -> Readable.from). I decided to bump the major version with this breaking change. The API itself hasn't changed at all and still works as-is.
+I decided to update this repo and drop unnecessary code. Version `3.0.1` already was constrained to Node v6; but by breaking some eggs and moving to >= v10, I'm able to drop dependencies and remove unnecessary code (i.e. buffered-reader -> Readable.from). I decided to bump the major version with this breaking change. The API itself hasn't changed at all and still works as-is.
 
 # Usage
 ## Buffered
