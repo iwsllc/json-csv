@@ -1,6 +1,6 @@
 const StringWriter = require('../src/string-writer')
-const should = require('should')
-const {Readable} = require('stream')
+const { Readable } = require('stream')
+const { expect } = require('chai')
 
 describe('BufferedWriter', function() {
   describe('utf8 encoding', function() {
@@ -9,7 +9,7 @@ describe('BufferedWriter', function() {
         yield Buffer.from('abcd', 'utf8')
       }
       this.result = ''
-      let writer = new StringWriter({defaultEncoding: 'utf8'})
+      const writer = new StringWriter({ defaultEncoding: 'utf8' })
       Readable.from(generateReadableChunk())
         .pipe(writer)
         .on('error', done)
@@ -18,7 +18,7 @@ describe('BufferedWriter', function() {
           done()
         })
     })
-    it('should work', function() { this.result.should.equal('abcd') })
+    it('should work', function() { expect(this.result).to.equal('abcd') })
   })
   describe('hex encoding', function() {
     before(function(done) {
@@ -26,7 +26,7 @@ describe('BufferedWriter', function() {
         yield Buffer.from('abcd', 'utf8')
       }
       this.result = ''
-      let writer = new StringWriter({defaultEncoding: 'hex'})
+      const writer = new StringWriter({ defaultEncoding: 'hex' })
       Readable.from(generateReadableChunk())
         .pipe(writer)
         .on('error', done)
@@ -35,6 +35,6 @@ describe('BufferedWriter', function() {
           done()
         })
     })
-    it('should work', function() { this.result.should.equal('61626364') })
+    it('should work', function() { expect(this.result).to.equal('61626364') })
   })
 })

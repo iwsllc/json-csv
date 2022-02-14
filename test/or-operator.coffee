@@ -7,7 +7,7 @@ describe "OR || operator", ->
       { column1 : 'foo1'},
         { column2 : 'foo2'} ]; #--> all 2 columns should be merged one column 'combinedCol'
 
-    jsoncsv.buffered arrayItems, { fields: [ { name : 'column1||column2', label : 'combinedCol' } ] }, (err,csv)->
+    jsoncsv.toCsv arrayItems, { fields: [ { name : 'column1||column2', label : 'combinedCol' } ] }, (err,csv)->
       csv.should.equal 'combinedCol\r\nfoo1\r\nfoo2\r\n'
       done()
     return
@@ -18,7 +18,7 @@ describe "OR || operator", ->
         { column2 : 'foo2'},
           { column3 : 'foo3'} ]; #--> all 3 columns should be merged one column 'combinedCol'
 
-    jsoncsv.buffered arrayItems, { fields: [ { name : 'column1||column2||column3', label : 'combinedCol' } ] }, (err,csv)->
+    jsoncsv.toCsv arrayItems, { fields: [ { name : 'column1||column2||column3', label : 'combinedCol' } ] }, (err,csv)->
       csv.should.equal 'combinedCol\r\nfoo1\r\nfoo2\r\nfoo3\r\n'
       done()
     return
@@ -29,7 +29,7 @@ describe "OR || operator", ->
         { column1 : 'fooIgnored', column2 : 'foo2', otherData: 'baz2'},
           { column3 : 'foo3', otherData: 'baz3', anotherData: 'daz3'} ]; #--> should merge column1, 2 and 3 and parse others normally 'combinedCol'
 
-    jsoncsv.buffered arrayItems, { fields: [
+    jsoncsv.toCsv arrayItems, { fields: [
       { name : 'column1||column2||column3', label : 'combinedCol' },
         { name : 'otherData', label : 'otherColumn' },
           { name : 'anotherData', label : 'anotherColumn' } ], fieldSeparator : ';'}, (err,csv)->
@@ -44,7 +44,7 @@ describe "OR || operator", ->
           { column2 : '', column3 : 'foo3', otherData: 'baz3'}, #--> will ignore empty column value
             { column3 : 'foo4', otherData: 'baz4', anotherData: 'daz4'} ]; #--> will parse normaly
 
-    jsoncsv.buffered arrayItems, { fields: [
+    jsoncsv.toCsv arrayItems, { fields: [
       { name : 'column1||column2||column3', label : 'combinedCol' },
         { name : 'otherData', label : 'otherColumn' },
           { name : 'anotherData', label : 'anotherColumn' } ], fieldSeparator : ';'}, (err,csv)->

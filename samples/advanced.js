@@ -1,4 +1,4 @@
-const csv = require('../src/index')
+const { toCsv } = require('../src/index')
 
 const items = [
   {
@@ -6,48 +6,48 @@ const items = [
     contact: {
       company: 'Widgets, LLC',
       name: 'John Doe',
-      email: 'john@widgets.somewhere',
+      email: 'john@widgets.somewhere'
     },
     registration: {
       year: 2013,
-      level: 3,
-    },
+      level: 3
+    }
   },
   {
     downloaded: true,
     contact: {
       company: 'Sprockets, LLC',
       name: 'Jane Doe',
-      email: 'jane@sprockets.somewhere',
+      email: 'jane@sprockets.somewhere'
     },
     registration: {
       year: 2013,
-      level: 2,
-    },
-  },
+      level: 2
+    }
+  }
 ]
 const options = {
   fields: [
     {
       name: 'contact.company',
-      label: 'Company',
+      label: 'Company'
     },
     {
       name: 'contact.name',
-      label: 'Name',
+      label: 'Name'
     },
     {
       name: 'contact.email',
-      label: 'Email',
+      label: 'Email'
     },
     {
       name: 'downloaded',
-      label: "Downloaded",
-      transform: (v) => v ? 'downloaded' : 'pending',
+      label: 'Downloaded',
+      transform: (v) => v ? 'downloaded' : 'pending'
     },
     {
       name: 'registration.year',
-      label: 'Year',
+      label: 'Year'
     },
     {
       name: 'registration.level',
@@ -58,14 +58,14 @@ const options = {
           case 2: return 'Test 2'
           default: return 'Unknown'
         }
-      },
-    },
-  ],
+      }
+    }
+  ]
 }
 
 async function writeCsv() {
   try {
-    let result = await csv.buffered(items, options)
+    const result = await toCsv(items, options)
     console.log(result)
   } catch (err) {
     console.error(err)

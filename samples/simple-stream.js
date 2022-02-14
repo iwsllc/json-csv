@@ -1,46 +1,46 @@
-const csv = require('../src/index')
-const {Readable} = require('stream')
+const jsonCsv = require('../src/index')
+const { Readable } = require('stream')
 
-let items = [
+const items = [
   {
     name: 'fred',
     email: 'fred@somewhere',
-    amount: 1.02,
+    amount: 1.02
   },
   {
     name: 'jo',
     email: 'jo@somewhere',
-    amount: 1.02,
+    amount: 1.02
   },
   {
     name: 'jo with a comma,',
     email: 'jo@somewhere',
-    amount: 1.02,
+    amount: 1.02
   },
   {
     name: 'jo with a quote"',
     email: 'jo@somewhere',
-    amount: 1.02,
+    amount: 1.02
   }]
 
-let options = {
+const options = {
   fields: [
     {
       name: 'name',
       label: 'Name',
-      quoted: true,
+      quoted: true
     },
     {
       name: 'email',
-      label: 'Email',
+      label: 'Email'
     },
     {
       name: 'amount',
-      label: 'Amount',
-    },
-  ],
+      label: 'Amount'
+    }
+  ]
 }
 
 Readable.from(items)
-  .pipe(csv.stream(options))
+  .pipe(jsonCsv.stream(options))
   .pipe(process.stdout)

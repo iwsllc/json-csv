@@ -1,50 +1,50 @@
-const csv = require('../src/index')
-const {Readable} = require('stream')
+const { toCsvStream } = require('../src/index')
+const { Readable } = require('stream')
 
-let items = [
+const items = [
   {
     downloaded: false,
     contact: {
       company: 'Widgets, LLC',
       name: 'John Doe',
-      email: 'john@widgets.somewhere',
+      email: 'john@widgets.somewhere'
     },
     registration: {
       year: 2013,
-      level: 3,
-    },
+      level: 3
+    }
   },
   {
     downloaded: false,
     contact: {
       company: 'Sprockets, LLC',
       name: 'Jane Doe',
-      email: 'jane@sprockets.somewhere',
+      email: 'jane@sprockets.somewhere'
     },
     registration: {
       year: 2013,
-      level: 2,
-    },
-  },
+      level: 2
+    }
+  }
 ]
 
-let options = {
+const options = {
   fields: [
     {
       name: 'contact.company',
-      label: 'Company',
+      label: 'Company'
     },
     {
       name: 'contact.name',
-      label: 'Name',
+      label: 'Name'
     },
     {
       name: 'contact.email',
-      label: 'Email',
+      label: 'Email'
     },
     {
       name: 'registration.year',
-      label: 'Year',
+      label: 'Year'
     },
     {
       name: 'registration.level',
@@ -55,10 +55,10 @@ let options = {
           case 2: return 'Test 2'
           default: return 'Unknown'
         }
-      },
-    }],
+      }
+    }]
 }
 
 Readable.from(items)
-  .pipe(csv.stream(options))
+  .pipe(toCsvStream(options))
   .pipe(process.stdout)

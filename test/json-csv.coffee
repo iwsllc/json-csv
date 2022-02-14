@@ -1,29 +1,9 @@
-should       = require "should"
-jsoncsv      = require("../src/index")
-StringWriter       = require('../src/string-writer')
-Exporter     = jsoncsv.Exporter
-stream       = require "stream"
-
-Readable = stream.Readable
+should = require "should"
+{ toCsv, toCsvStream, Exporter } = require("../src/index")
+StringWriter = require('../src/string-writer')
+{ Readable } = require "stream"
 
 describe "JSON - CSV", ->
-  describe "Value Evaluator", ->
-    it "should evaluate value of contact.name", (done) ->
-      test = {contact : {name : 'some name'}}
-      result = new Exporter(test).getValue(test, 'contact.name')
-      result.should.equal 'some name'
-      done()
-    it "should evaluate value of contact.name.middle.initial", (done) ->
-      test = {contact : {name : { middle : {initial : 'L'}}}}
-      result = new Exporter(test).getValue(test, 'contact.name.middle.initial')
-      result.should.equal 'L'
-      done()
-    it "should evaluate undefined value of contact.name.middle.initial as blank string", (done) ->
-      test = {contact : {name : 'test'}}
-      result = new Exporter(test).getValue(test, 'contact.test.somethingelse')
-      result.should.equal ''
-      done()
-
   describe 'JSON to CSV converter', ->
     describe "Converting buffer to CSV; internal API", ->
       before (done) ->
@@ -37,7 +17,7 @@ describe "JSON - CSV", ->
             label : 'amount'
           ]
         @data = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
-        @exporter.buffered @data
+        @exporter.toCsv @data
         .catch (err) => done err
         .then (csv) =>
           @result = csv
@@ -47,7 +27,7 @@ describe "JSON - CSV", ->
     describe "When converting a buffer of data to CSV using fieldSeparator", ->
       before (done) ->
         @data = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
-        jsoncsv.buffered @data,
+        toCsv @data,
           fields : [
             name : 'contact.name'
             label : 'contact'
@@ -65,7 +45,7 @@ describe "JSON - CSV", ->
     describe "When converting a buffer of data to CSV with field filters", ->
       before (done) ->
         @data = [{contact : {name : 'test', amount : 4.3}}, {contact : {name : 'test2', amount : 5}}]
-        jsoncsv.buffered @data,
+        toCsv @data,
           fields : [
             name : 'contact.name'
             label : 'contact'
@@ -83,7 +63,7 @@ describe "JSON - CSV", ->
     describe "When filter is provided and the value is falsey", ->
       before (done) ->
         @data = [{contact : {name : 'test', thing: false, amount : 4.3}}, {contact : {thing: true, name : null, amount : 5}}]
-        jsoncsv.buffered @data,
+        toCsv @data,
           fields : [
             name : 'contact.thing'
             label : 'thing'
@@ -102,28 +82,6 @@ describe "JSON - CSV", ->
         return
       it "should write empty data", -> @result.should.equal('thing,name,amount\r\nNo,test,4.3\r\nYes,,5\r\n')
 
-  describe 'Field value prep', ->
-    it 'surround with quotes (and double-qoute inner) if any quotes detected within the value', (done) ->
-      test = 'someString"'
-      result = new Exporter().prepValue test
-      result.should.equal '"someString"""'
-      done()
-    it 'surround with quotes if any commas detected within the value', (done) ->
-      test = 'someString,'
-      result = new Exporter({fieldSeparator: ','}).prepValue test
-      result.should.equal '"someString,"'
-      done()
-    it 'surround with quotes if any fieldSeparator detected within the value', (done) ->
-      test = 'someString;'
-      result = new Exporter({fieldSeparator: ';'}).prepValue test
-      result.should.equal '"someString;"'
-      done()
-    it 'surround with quotes if force quote option is true', (done) ->
-      test = 'someString'
-      result = new Exporter().prepValue test, true
-      result.should.equal '"someString"'
-      done()
-
   describe 'JSON to CSV stream', ->
     describe "When piping data through the Exporter to a buffer", ->
       before (done) ->
@@ -139,7 +97,7 @@ describe "JSON - CSV", ->
         @result = ''
         writer = new StringWriter()
         Readable.from(@data)
-          .pipe(jsoncsv.csv {fields : @fields})
+          .pipe(toCsvStream {fields : @fields})
           .pipe writer
           .on 'finish', () =>
             @result = writer.data

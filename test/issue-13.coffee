@@ -26,7 +26,7 @@ describe "Issue 13", ->
         {name: 'hcr_data_url', label: 'hcr url'}
         {name: 'description', label: 'description'}
       ]
-      jsoncsv.buffered @items, {fields: @options}, (err, csv) =>
+      jsoncsv.toCsv @items, {fields: @options}, (err, csv) =>
         @csv = csv
         @err = err
         done()
