@@ -1,7 +1,7 @@
 name: Publish to npmjs.com
 on:
   push:
-    branches: [ main ]
+    branches: [ main, json-csv ]
 jobs:
   build:
     runs-on: ubuntu-latest
