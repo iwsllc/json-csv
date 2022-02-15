@@ -1,6 +1,6 @@
 # json-csv
 
-[![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
+[![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg?branch=json-csv&event=status)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
 
 Simple Node.JS CSV export module that can export a rich JSON array of objects to CSV. 
 
