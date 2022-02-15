@@ -1,25 +1,26 @@
 const Exporter = require('./exporter')
 
-module.exports = {
+const _exports = {
   Exporter,
   stream: function(options = {}, next) {
-    options = {...options, buffered: false}
+    options = { ...options, buffered: false }
 
-    let transformer = new Exporter(options).stream()
+    const transformer = new Exporter(options).stream()
     if (typeof next === 'function') { return next(null, transformer) }
 
     return transformer
   },
   buffered: function(data, options = {}, next) {
-    options = {...options, buffered: true}
+    options = { ...options, buffered: true }
 
-    let promise = new Exporter(options).buffered(data)
+    const promise = new Exporter(options).buffered(data)
     if (typeof next === 'function') {
-      return promise
+      promise
         .then((result) => {
           next(null, result)
         })
         .catch((err) => { next(err) })
+      return // NOTE: don't return promise; just make callback
     }
 
     return promise
@@ -27,13 +28,19 @@ module.exports = {
 
   // legacy
   csv: function(options = {}) {
-    options = {...options, buffered: false}
+    options = { ...options, buffered: false }
     return new Exporter(options).stream()
   },
   csvBuffered: function(data, options = {}, done) {
-    options = {...options, buffered: true}
+    options = { ...options, buffered: true }
     new Exporter(options).buffered(data)
       .then((result) => { done(null, result) })
       .catch((err) => { done(err) })
-  },
+  }
 }
+
+// aliases
+_exports.toCsv = _exports.buffered
+_exports.toCsvStream = _exports.stream
+
+module.exports = _exports

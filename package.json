@@ -1,13 +1,14 @@
 {
-  "name": "json-csv",
-  "version": "4.0.3",
-  "description": "Export a richly structured, JSON array to CSV",
+  "name": "@iwsio/json-csv-node",
+  "version": "5.0.0",
+  "description": "Easily convert JSON to CSV in Node.JS. This package supports streaming and buffered conversion to CSV.",
   "homepage": "https://github.com/IWSLLC/json-csv",
-  "author": "Nathan Bridgewater <info@iws.io> (http://iws.io/)",
+  "author": "Nathan Bridgewater <info@iws.io> (https://iws.io/)",
   "keywords": [
     "csv",
-    "export",
-    "json"
+    "json",
+    "convert",
+    "conversion"
   ],
   "repository": {
     "type": "git",
@@ -18,10 +19,14 @@
     "node": ">=10"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.17.0",
+    "chai": "^4.3.6",
     "coffeescript": "^2.5.1",
     "debug": "^4.3.2",
-    "eslint": "^7.32.0",
+    "eslint": "^8.9.0",
     "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-mocha": "^10.0.3",
+    "eslint-plugin-promise": "^6.0.0",
     "mocha": "^9.0.3",
     "should": "^13.2.3"
   },
@@ -31,7 +36,9 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@iwsio/json-csv-core": "^0.2.6"
+  },
   "scripts": {
     "test": "mocha $@"
   },

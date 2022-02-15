@@ -7,7 +7,7 @@ describe 'No Header Row', ->
       { k: 'foo' }
       { k: 'bar' }
     ]
-    jsoncsv.buffered items, {
+    jsoncsv.toCsv items, {
       ignoreHeader: true
       fields: [ { name: 'k' } ]  # Label not needed
     }, (err, csv) ->

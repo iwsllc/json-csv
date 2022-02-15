@@ -1,155 +1,80 @@
-json-csv
-========
+# @iwsio/json-csv-node
 
 [![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
 
-Simple CSV export module that can export a rich JSON array of objects to CSV. 
-
-## Update `4.0.0`
-I decided to update this repo and drop unnecessary code. Version `3.0.1` already was constrained to Node v6; but by breaking some eggs and moving to >= v10, I'm able to drop dependencies and remove unnecessary code (i.e. buffered-reader -> Readable.from). I decided to bump the major version with this breaking change. The API itself hasn't changed at all and still works as-is.
+This package extends [@iwsio/json-csv-core](https://www.npmjs.com/package/@iwsio/json-csv-core) specifically targeting Node.JS to support streaming. It's all the same code as before, just moved around.
 
 # Usage
-## Buffered
+## Buffered (Converts to CSV with an in-memory data source)
 ```js
-const jsoncsv = require('json-csv')
+const { toCsv } = require('@iwsio/json-csv-node')
 
-let csv = await jsoncsv.buffered(data, options) //returns Promise
+const csv = await toCsv(data, options) // toCsv returns Promise
 
-//optionally, you can use the callback
-jsoncsv.buffered(data, options, (err, csv) => {...}))
+// optionally, you can use a callback
+toCsv(data, options, function(err, csv) {...}))
 ```
- - data: Array of JS objects
- - options: {fields: [], ...}
- - optional callback: returns string result
-
-## Streaming
+ 
+## Streaming (Converts a "row at a time" from a stream source)
 When using the streaming API, you can pipe data to it in object mode.
 
 ```js
-const jsoncsv = require('json-csv')
-
-let readable = some_readable_source //<readable source in object mode>
-readable
-  .pipe(jsoncsv.stream(options)) //transforms to Utf8 string and emits lines
-  .pipe(something_else_writable)
+const { toCsvStream } = require('@iwsio/json-csv-node')
+const things = [
+  {name: 'thing1', age: 20},
+  {name: 'thing2', age: 30},
+  {name: 'thing3', age: 45}
+]
+ 
+Readable.from(things) // <readable source in object mode>
+  .pipe(toCsvStream(options)) // transforms to Utf8 string and emits lines
+  .pipe(process.stdout) // anything Writable
 })
 ```
 
+### NOTE: All the aliases from previous versions remain intact.
 
-### Options
+I renamed this API mostly for cosmetics and to cleanup named exports for ES Modules. It made more sense to me to `import { toCSV } from 'json-csv'` rather than importing the default and calling its prop. (I've been doing a lot of Typescript lately). But all the original versions are kept intact and tests are in place to assert they work.
+
+```js
+const jsonCsv = require('@iwsio/json-csv-node')
+jsonCsv.toCsv // buffered, returns promise, callback optional
+jsonCsv.toCsvStream // stream, returns stream, callback optional
+
+jsonCsv.buffered // alias to toCsv (buffered)
+jsonCsv.stream // alias to toCsvStream (streamed)
+
+jsonCsv.csv // alias to toCsvStream (streamed)
+jsonCsv.csvBuffered // alias to toCsv (buffered)
+```
+
+
+## Options
 ```js
 {
-  //field definitions for CSV export
+  // field definitions for CSV export
   fields :
   [
     {
-      //required: field name for source value
+      // required: field name for source value
       name: 'string',
 
-      //required: column label for CSV header
+      // optional: column label for CSV header
       label: 'string',
 
-      //optional: transform value before exporting
+      // optional: transform value before exporting
       transform: function(value) { return value; }
     }
   ],
 
   // Other default options:
-  fieldSeparator: ","
-  ,ignoreHeader: false
-  ,encoding: "utf8"
+  fieldSeparator: ",",
+  ignoreHeader: false
 }
 ```
-
-# Examples
-
-## Given these items and options: 
-
-```javascript
-let items = [
-  {
-    name: 'fred',
-    email: 'fred@somewhere',
-    amount: 1.02,
-  },
-  {
-    name: 'jo',
-    email: 'jo@somewhere',
-    amount: 1.02,
-  },
-  {
-    name: 'jo with a comma,',
-    email: 'jo@somewhere',
-    amount: 1.02,
-  },
-  {
-    name: 'jo with a quote"',
-    email: 'jo@somewhere',
-    amount: 1.02,
-  }]
-
-let options = {
-  fields: [
-    {
-      name: 'name',
-      label: 'Name',
-      quoted: true,
-    },
-    {
-      name: 'email',
-      label: 'Email',
-    },
-    {
-      name: 'amount',
-      label: 'Amount',
-    },
-  ],
-}
-```
-
-## Buffered
-This method will take an array of data and convert it into a CSV string all in runtime memory. This works well for small amounts of data.
-
-```javascript
-const jsoncsv = require('json-csv')
-async function writeCsv() {
-  try {
-    let csv = await jsoncsv.buffered(items, options)
-    console.log(csv)
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-writeCsv()
-```
-
-## Streamed
-Here, we want to pipe data from a source to the converter, write the headers and then pipe it to an output (one row at a time). This works really well for large amounts of data like exporting from a MongoDb query directly. 
-
-
-```javascript
-const jsoncsv = require('json-csv')
-const {Readable} = require('stream')
-
-Readable.from(items)
-  .pipe(csv.stream(options))
-  .pipe(process.stdout)
-```
-
-## Output
-
-```
-Name,Email,Amount
-"fred",fred@somewhere,1.02
-"jo",jo@somewhere,1.02
-"jo with a comma,",jo@somewhere,1.02
-"jo with a quote""",jo@somewhere,1.02
-```
-
 
 ## Advanced Example
-Here, you can see we're using a deeper set of objects for our source data and accommodating by using dot notation in the field definitions. 
+Here, you can see we're using a deeper set of objects for our source data, and we're using dot notation in the field definitions like: `contact.name` for the contact name. 
 
 ```javascript
 const items = [
@@ -215,16 +140,10 @@ const options = {
   ],
 }
 
-async function writeCsv() {
-  try {
-    let result = await csv.buffered(items, options)
-    console.log(result)
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-writeCsv()
+(async () => {
+  let result = await toCsv(items, options)
+  console.log(result)
+})()
 ```
 
 ### Output

@@ -6,6 +6,8 @@
 *.pid
 *.gz
 
+.yalc
+yalc.lock
 .DS_Store
 pids
 logs

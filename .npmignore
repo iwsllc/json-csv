@@ -2,6 +2,7 @@
 /samples
 .*
 
+*.md
 *.seed
 *.log
 *.csv
@@ -9,11 +10,14 @@
 *.out
 *.pid
 *.gz
+*.config
 
+.yalc
+yalc.lock
 .DS_Store
 pids
 logs
 results
 node_modules
 npm-debug.log
-
+tsconfig.json
