@@ -1,19 +1,20 @@
-json-csv
-========
+# json-csv
 
 [![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
 
-Simple CSV export module that can export a rich JSON array of objects to CSV. 
+Simple Node.JS CSV export module that can export a rich JSON array of objects to CSV. 
 
-## Update `4.0.0`
-I decided to update this repo and drop unnecessary code. Version `3.0.1` already was constrained to Node v6; but by breaking some eggs and moving to >= v10, I'm able to drop dependencies and remove unnecessary code (i.e. buffered-reader -> Readable.from). I decided to bump the major version with this breaking change. The API itself hasn't changed at all and still works as-is.
+## Update v5
+I've decided to consolidate this package under my @iwsio scope as a new package named `@iwsio/json-csv-node`. This was in part inspired by the lack of support for browser due to the streaming API usage like `stream.Readable`.  Version 5 is 100% backwork compatible with v4. You can [read more about it on my blog.](https://iws.io/2022/json-csv-v5) 
+
+[Checkout @iwsio/json-csv-node](https://www.npmjs.com/package/@iwsio/json-csv-node) for the update!
 
 # Usage
 ## Buffered
 ```js
 const jsoncsv = require('json-csv')
 
-let csv = await jsoncsv.buffered(data, options) //returns Promise
+const csv = await jsoncsv.buffered(data, options) //returns Promise
 
 //optionally, you can use the callback
 jsoncsv.buffered(data, options, (err, csv) => {...}))
@@ -28,7 +29,7 @@ When using the streaming API, you can pipe data to it in object mode.
 ```js
 const jsoncsv = require('json-csv')
 
-let readable = some_readable_source //<readable source in object mode>
+const readable = some_readable_source //<readable source in object mode>
 readable
   .pipe(jsoncsv.stream(options)) //transforms to Utf8 string and emits lines
   .pipe(something_else_writable)
@@ -61,95 +62,8 @@ readable
 }
 ```
 
-# Examples
-
-## Given these items and options: 
-
-```javascript
-let items = [
-  {
-    name: 'fred',
-    email: 'fred@somewhere',
-    amount: 1.02,
-  },
-  {
-    name: 'jo',
-    email: 'jo@somewhere',
-    amount: 1.02,
-  },
-  {
-    name: 'jo with a comma,',
-    email: 'jo@somewhere',
-    amount: 1.02,
-  },
-  {
-    name: 'jo with a quote"',
-    email: 'jo@somewhere',
-    amount: 1.02,
-  }]
-
-let options = {
-  fields: [
-    {
-      name: 'name',
-      label: 'Name',
-      quoted: true,
-    },
-    {
-      name: 'email',
-      label: 'Email',
-    },
-    {
-      name: 'amount',
-      label: 'Amount',
-    },
-  ],
-}
-```
-
-## Buffered
-This method will take an array of data and convert it into a CSV string all in runtime memory. This works well for small amounts of data.
-
-```javascript
-const jsoncsv = require('json-csv')
-async function writeCsv() {
-  try {
-    let csv = await jsoncsv.buffered(items, options)
-    console.log(csv)
-  } catch (err) {
-    console.error(err)
-  }
-}
-
-writeCsv()
-```
-
-## Streamed
-Here, we want to pipe data from a source to the converter, write the headers and then pipe it to an output (one row at a time). This works really well for large amounts of data like exporting from a MongoDb query directly. 
-
-
-```javascript
-const jsoncsv = require('json-csv')
-const {Readable} = require('stream')
-
-Readable.from(items)
-  .pipe(csv.stream(options))
-  .pipe(process.stdout)
-```
-
-## Output
-
-```
-Name,Email,Amount
-"fred",fred@somewhere,1.02
-"jo",jo@somewhere,1.02
-"jo with a comma,",jo@somewhere,1.02
-"jo with a quote""",jo@somewhere,1.02
-```
-
-
 ## Advanced Example
-Here, you can see we're using a deeper set of objects for our source data and accommodating by using dot notation in the field definitions. 
+Here, you can see we're using a deeper set of objects for our source data and we're using dot notation in the field definitions. 
 
 ```javascript
 const items = [
