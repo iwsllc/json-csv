@@ -2,7 +2,7 @@
 
 [![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
 
-This package extends [@iwsio/json-csv-core](https://www.npmjs.com/package/@iwsio/json-csv-core) specifically targeting Node.JS to support streaming. It's all the same code as before, just moved around.
+This package extends [@iwsio/json-csv-core](https://www.npmjs.com/package/@iwsio/json-csv-core) specifically targeting Node.JS to support streaming. It's all the same code as before, just moved around. You can [read more about it on my blog.](https://iws.io/2022/json-csv-v5)
 
 # Usage
 ## Buffered (Converts to CSV with an in-memory data source)
