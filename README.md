@@ -27,7 +27,7 @@ const things = [
 ]
  
 Readable.from(things) // <readable source in object mode>
-  .pipe(toCsvStream(options)) // transforms to Utf8 string and emits lines
+  .pipe(toCsvStream(options)) // transforms to string and emits lines
   .pipe(process.stdout) // anything Writable
 })
 ```
