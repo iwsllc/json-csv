@@ -4,8 +4,6 @@
 name: Tests CI
 
 on:
-  push:
-    branches: [ main, json-csv ]
   pull_request:
     branches: [ main, json-csv ]
 
