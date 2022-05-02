@@ -4,16 +4,12 @@
 name: Tests CI
 
 on:
-  push:
-    branches: [ main, json-csv ]
   pull_request:
     branches: [ main, json-csv ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x, 16.x]
