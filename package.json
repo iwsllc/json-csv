@@ -20,9 +20,9 @@
   "devDependencies": {
     "coffeescript": "^2.5.1",
     "debug": "^4.3.2",
-    "eslint": "^7.32.0",
+    "eslint": "^8.28.0",
     "eslint-plugin-import": "^2.24.0",
-    "mocha": "^9.0.3",
+    "mocha": "^10.1.0",
     "should": "^13.2.3"
   },
   "bugs": {
@@ -31,7 +31,6 @@
   "directories": {
     "test": "test"
   },
-  "dependencies": {},
   "scripts": {
     "test": "mocha $@"
   },
