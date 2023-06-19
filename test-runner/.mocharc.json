@@ -1,0 +1,10 @@
+{
+  "reporter": "spec",
+    "ui": "bdd",
+    "recursive": true,
+    "colors": true,
+    "exit": true,
+    "extension": [
+      "js","mjs","cjs"
+    ]
+}

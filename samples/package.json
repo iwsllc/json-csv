@@ -1,0 +1,22 @@
+{
+  "name": "@iwsio/json-csv-node-samples",
+  "version": "6.0.0-alpha.6",
+  "description": "Dog-fooding in CJS and ESM the node package.",
+  "type": "module",
+  "scripts": {
+    "start": "npm-run-all -s start:*",
+    "start:simple-cjs": "node simple.cjs",
+    "start:adv-cjs": "node advanced.cjs",
+    "start:simple-stream-cjs": "node simple-stream.cjs",
+    "start:adv-stream-cjs": "node advanced-stream.cjs",
+    "start:simple-esm": "node simple.mjs",
+    "start:adv-esm": "node advanced.mjs",
+    "start:simple-stream-esm": "node simple-stream.mjs",
+    "start:adv-stream-esm": "node advanced-stream.mjs"
+  },
+  "author": "Nathan Bridgewater",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
