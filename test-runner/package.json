@@ -1,0 +1,23 @@
+{
+  "name": "@iwsio/json-csv-node-test-runner",
+  "version": "6.0.0-alpha.7",
+  "type": "module",
+  "dependencies": {
+    "@iwsio/json-csv-core": "^1.0.0",
+    "chai": "^4.3.6",
+    "coffeescript": "^2.5.1",
+    "mocha": "^9.2.2",
+    "should": "^13.2.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.24.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-mocha": "^9.0.0",
+    "eslint-plugin-node": "^11.1.0"
+  },
+  "scripts": {
+    "test": "mocha $@"
+  },
+  "author": "Nathan Bridgewater",
+  "license": "ISC"
+}

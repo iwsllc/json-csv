@@ -1,0 +1,31 @@
+name: Publish @iwsio/json-csv-node to npmjs.com
+on:
+  workflow_call:
+  
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git fetch
+          git pull origin main
+          npm version patch -ws --include-workspace-root
+          git add .
+          git commit -m "CI - package versions"
+          npm version from-git --allow-same-version
+          git push
+          git push --tags
+      - run: npm ci -w package
+      - run: npm run build -w package
+      - run: npm publish --access public -w package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

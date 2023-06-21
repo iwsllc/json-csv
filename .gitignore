@@ -5,7 +5,8 @@
 *.out
 *.pid
 *.gz
-
+dist
+*.tsbuildinfo
 .yalc
 yalc.lock
 .DS_Store
@@ -16,3 +17,6 @@ node_modules
 npm-debug.log
 .npmrc
 .vscode
+
+dist-esm
+dist-cjs
