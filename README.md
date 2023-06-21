@@ -1,5 +1,7 @@
 # @iwsio/json-csv-node
 
+[![Checks](https://github.com/iwsllc/json-csv/actions/workflows/push-main.yml/badge.svg?branch=main)](https://github.com/iwsllc/json-csv/actions/workflows/push-main.yml)
+
 For more information on [json-csv-node itself, checkout the readme](./package/README.md).
 
 ## Dev Setup
