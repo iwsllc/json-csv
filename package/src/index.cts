@@ -53,7 +53,7 @@ export const toCsvSync = bufferedSync
  * @param callback (optional): If provided, calls back with the result error or CSV string
  * @returns If callback provided, returns void; otherwise, returns a promise of the result CSV string
  */
-export const buffered = (data: Record<string, any>[], options: Partial<NodeExportOptions>, callback?: BufferedCallback): Promise<string> | string => {
+export const buffered = (data: Record<string, any>[], options: Partial<NodeExportOptions>, callback?: BufferedCallback): Promise<string> | void => {
 	if (callback == null) return exporter.buffered(data, options)
 
 	exporter.buffered(data, options)
