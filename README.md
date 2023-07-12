@@ -1,6 +1,6 @@
 # @iwsio/json-csv-node
 
-[![Publish to npmjs.com](https://github.com/iwsllc/json-csv/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/iwsllc/json-csv/actions/workflows/main.yaml)
+[![Push to main](https://github.com/iwsllc/json-csv/actions/workflows/push-main.yml/badge.svg?branch=main)](https://github.com/iwsllc/json-csv/actions/workflows/push-main.yml)
 
 For more information on [json-csv-node itself, checkout the readme](./package/README.md).
 
