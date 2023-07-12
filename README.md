@@ -1,6 +1,6 @@
 # json-csv
 
-[![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg?branch=json-csv)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
+[![Publish to npmjs.com](https://github.com/iwsllc/json-csv/actions/workflows/main.yaml/badge.svg?branch=json-csv)](https://github.com/iwsllc/json-csv/actions/workflows/main.yaml)
 
 This is a simple Node.JS module that can transorm JSON data to CSV. This version 4.x is in maintenance mode and will only receive critical updates. Please see [@iwsio/json-csv-node](https://www.npmjs.com/package/@iwsio/json-csv-node) for the latest, active version of this package.  
 
