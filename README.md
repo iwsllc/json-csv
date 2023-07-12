@@ -2,12 +2,10 @@
 
 [![Tests CI](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml/badge.svg?branch=json-csv)](https://github.com/IWSLLC/json-csv/actions/workflows/test.yaml)
 
-Simple Node.JS CSV export module that can export a rich JSON array of objects to CSV. 
+This is a simple Node.JS module that can transorm JSON data to CSV. This version 4.x is in maintenance mode and will only receive critical updates. Please see [@iwsio/json-csv-node](https://www.npmjs.com/package/@iwsio/json-csv-node) for the latest, active version of this package.  
 
-## Update v5
-I've decided to consolidate this package under my @iwsio scope as a new package named `@iwsio/json-csv-node`. This was in part inspired by the lack of support for browser due to the streaming API usage like `stream.Readable`.  Version 5 is 100% backwork compatible with v4. You can [read more about it on my blog.](https://iws.io/2022/json-csv-v5) 
-
-[Checkout @iwsio/json-csv-node](https://www.npmjs.com/package/@iwsio/json-csv-node) for the update!
+## Update v6 - June 2023
+The latest version 6 just released in June 2023 and includes better type definitions along with ESM & CommonJS support. [Read more about it on the v6 blog post.](https://iws.io/2023/json-csv-v6)
 
 # Usage
 ## Buffered
