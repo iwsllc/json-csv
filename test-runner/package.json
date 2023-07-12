@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/json-csv-node-test-runner",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "type": "module",
   "dependencies": {
     "@iwsio/json-csv-core": "^1.0.0",

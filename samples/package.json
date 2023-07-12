@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/json-csv-node-samples",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "Dog-fooding in CJS and ESM the node package.",
   "type": "module",
   "scripts": {
