@@ -16,7 +16,7 @@ jobs:
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          npm config set tag-version-prefix 'json-csv-node v'
+          npm config set tag-version-prefix 'json-csv-node-'
           git fetch
           git pull origin main
           npm version patch -w packages/json-csv-node --include-workspace-root -m "@iwsio/json-csv-node %s publish."
