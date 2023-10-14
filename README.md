@@ -1,8 +1,7 @@
-# @iwsio/json-csv-node
-# @iwsio/json-csv-core
+# @iwsio/json-csv-node & @iwsio/json-csv-core
 
-Checkout the readme for [more information on json-csv-node](./packages/json-csv-node/README.md).
-Checkout the readme for [more information on json-csv-core](./packages/json-csv-core/README.md).
+ - [@iwsio/json-csv-node README](./packages/json-csv-node/README.md).
+ - [@iwsio/json-csv-core  README](./packages/json-csv-core/README.md).
 
 ## Dev Setup
 
@@ -13,13 +12,12 @@ npm i
 # build the packages
 npm run build
 
-# run the samples individually
+# run the samples
 npm start -w samples
 
 # run the tests with current runtime
 npm test
-npm run test -w test-runner
 
-# for older versions of node <= 14, cd to the test-runner directory
+# for older versions of node <= 12, cd to the test-runner directory
 cd test-runner && npm test
 ```
