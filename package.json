@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/json-csv-node-root",
-  "version": "6.1.0-alpha.1",
+  "version": "1.0.0",
   "description": "Easily convert JSON to CSV in Node.JS. This package supports streaming and buffered conversion to CSV.",
   "homepage": "https://github.com/IWSLLC/json-csv",
   "author": "Nathan Bridgewater <info@iws.io> (https://iws.io/)",
