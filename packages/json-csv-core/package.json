@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:IWSLLC/json-csv.git"
+    "url": "git+ssh://git@github.com/IWSLLC/json-csv.git"
   },
   "keywords": [
     "csv",
@@ -35,9 +35,9 @@
   "author": "Nathan Bridgewater <info@iws.io> (https://iws.io/)",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/IWSLLC/json-csv-core/issues"
+    "url": "https://github.com/IWSLLC/json-csv/issues"
   },
-  "homepage": "https://github.com/IWSLLC/json-csv-core#readme",
+  "homepage": "https://github.com/iwsllc/json-csv/blob/main/packages/json-csv-core/README.md",
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
