@@ -1,7 +1,7 @@
 
 {
 	"compilerOptions": {
-		"allowJs": true,
+		"allowJs": false,
 		"composite": true,
 		"declaration": true,
 		"declarationMap": true,
@@ -9,7 +9,6 @@
 		"forceConsistentCasingInFileNames": true,
 		"incremental": true,
 		"inlineSourceMap": false,
-		"jsx": "react-jsx",
 		"lib": ["esnext"],
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
