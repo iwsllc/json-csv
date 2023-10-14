@@ -16,10 +16,11 @@ jobs:
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          npm config set tag-version-prefix 'json-csv-core-'
           git fetch
           git pull origin main
-          npm version patch -w packages/json-csv-core -m "@iwsio/json-csv-core %s publish."
+          npm version patch -w packages/json-csv-core && git add .
+          VER=`node ./npm-version-helper.cjs packages/json-csv-core`
+          git tag -am "@iwsio/json-csv-core $VER publish." "json-csv-core-$VER"
           git push
           git push --tags
       - run: npm ci -w packages/json-csv-node -w packages/json-csv-core
