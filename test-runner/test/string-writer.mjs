@@ -1,4 +1,3 @@
-/* eslint-disable mocha/no-hooks-for-single-case */
 import { StringWriter } from '@iwsio/json-csv-node'
 import { Readable } from 'stream'
 import { expect } from 'chai'

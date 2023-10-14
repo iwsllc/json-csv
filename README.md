@@ -1,17 +1,16 @@
 # @iwsio/json-csv-node
+# @iwsio/json-csv-core
 
-[![Push to main](https://github.com/iwsllc/json-csv/actions/workflows/push-main.yml/badge.svg?branch=main)](https://github.com/iwsllc/json-csv/actions/workflows/push-main.yml)
-
-For more information on [json-csv-node itself, checkout the readme](./package/README.md).
+Checkout the readme for [more information on json-csv-node](./packages/json-csv-node/README.md).
+Checkout the readme for [more information on json-csv-core](./packages/json-csv-core/README.md).
 
 ## Dev Setup
-Here's how to setup and run the samples locally. 
 
 ```bash
-# install everything for all workspaces (Recommended: Node 18)
+# install everything for all workspaces (Recommended: Node 20)
 npm i
 
-# build the library
+# build the packages
 npm run build
 
 # run the samples individually

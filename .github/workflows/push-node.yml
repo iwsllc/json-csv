@@ -1,15 +1,17 @@
-name: Push to json-csv (legacy)
+name: Push to main - @iwsio/json-csv-node
 
 on:
   push:
-    branches: [ json-csv ]
+    branches: [ main ]
+    paths:
+      - 'packages/json-csv-node/**'
 
 jobs:
   test:
     if: ${{ !contains(github.event.head_commit.message, '#skip') }}
-    uses: ./.github/workflows/legacy-test.yaml
+    uses: ./.github/workflows/node-test.yaml
   version-and-publish:
     needs: test
     if: ${{ !contains(github.event.head_commit.message, '#skip') }}
-    uses: ./.github/workflows/legacy-publish.yaml
+    uses: ./.github/workflows/node-publish.yaml
     secrets: inherit

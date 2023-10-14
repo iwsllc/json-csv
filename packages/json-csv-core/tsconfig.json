@@ -1,0 +1,16 @@
+
+{
+	"extends": "../../tsconfig-base.json",
+	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
+		"inlineSourceMap": true,
+		"sourceMap": false,
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"module": "Node16",
+		"moduleResolution": "Node16",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"target": "ES5"
+	},
+	"include": ["src/**/*"]
+}

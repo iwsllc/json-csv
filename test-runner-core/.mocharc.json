@@ -1,0 +1,13 @@
+{
+  "reporter": "spec",
+  "ui": "bdd",
+  "recursive": true,
+  "colors": true,
+  "exit": true,
+  "require": [
+    "./test/globals"
+  ],
+  "extension": [
+    "js"
+  ]
+}

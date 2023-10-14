@@ -1,8 +1,8 @@
-const index_default = require('@iwsio/json-csv-node');
-const { csv, csvBuffered, bufferedSync, stream, buffered, toCsv, toCsvStream, StringWriter } = require('@iwsio/json-csv-node');
+const index_default = require('@iwsio/json-csv-node')
+const { csv, csvBuffered, bufferedSync, stream, buffered, toCsv, toCsvStream, StringWriter } = require('@iwsio/json-csv-node')
 const { expect } = require('chai')
 
-describe("CJS, Node16+ Module exports", function() {
+describe('CJS, Node16+ Module exports', function() {
 	it('should export defaults', function() {
 		expect(index_default.buffered).to.be.a('function')
 		expect(index_default.bufferedSync).to.be.a('function')
@@ -26,5 +26,4 @@ describe("CJS, Node16+ Module exports", function() {
 		expect(csv).to.be.a('function')
 		expect(StringWriter).to.be.a('function')
 	})
-});
-
+})

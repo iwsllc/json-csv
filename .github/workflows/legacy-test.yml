@@ -1,4 +1,4 @@
-name: Run legacy tests
+name: Test json-csv (legacy)
 
 on:
   workflow_call:

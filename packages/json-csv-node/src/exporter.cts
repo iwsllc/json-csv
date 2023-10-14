@@ -9,8 +9,8 @@ export type NodeExportOptions = ExportOptions & { encoding: BufferEncoding }
 
 /**
  * Check the options; ensure defaults. This extends core's check options with new, encoding option for streams.
- * @param opts 
- * @returns 
+ * @param opts
+ * @returns
  */
 export const checkOptions = (opts?: Partial<NodeExportOptions>): NodeExportOptions => {
 	const options: Partial<NodeExportOptions> = baseCheckOptions(opts)
