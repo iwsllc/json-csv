@@ -19,9 +19,7 @@ jobs:
           npm config set tag-version-prefix 'json-csv-node-'
           git fetch
           git pull origin main
-          npm version patch -w packages/json-csv-node --include-workspace-root -m "@iwsio/json-csv-node %s publish."
-          git add .
-          git commit -am 'CI version bump'
+          npm version patch -w packages/json-csv-node -m "@iwsio/json-csv-node %s publish."
           git push
           git push --tags
       - run: npm ci -w packages/json-csv-node -w packages/json-csv-core
