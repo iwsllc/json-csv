@@ -1,10 +1,14 @@
 # json-csv
 
-[![Publish to npmjs.com](https://github.com/iwsllc/json-csv/actions/workflows/main.yaml/badge.svg?branch=json-csv)](https://github.com/iwsllc/json-csv/actions/workflows/main.yaml)
+[![Push to json-csv (legacy)](https://github.com/iwsllc/json-csv/actions/workflows/push-json-csv.yml/badge.svg)](https://github.com/iwsllc/json-csv/actions/workflows/push-json-csv.yml)
 
-This is a simple Node.JS module that can transorm JSON data to CSV. This version 4.x is in maintenance mode and will only receive critical updates. Please see [@iwsio/json-csv-node](https://www.npmjs.com/package/@iwsio/json-csv-node) for the latest, active version of this package.  
+This is a Node.JS package that can transorm data to CSV. I originally built this back in the 2014 (in the Node v0.4 days). We've come a long way, and it still works! So I won't be deprecating this until it can no longer function in active LTS versions of Node.JS. As LTS versions of Node.JS release, I'll keep this test pipeline up to date.
 
-## Update v6 - June 2023
+However, this version of the package (json-csv), 4.x is in maintenance mode and will only receive critical updates and occasionally tooling updates. For more recent improvements like ESM, Typescript support, etc, please refer to [@iwsio/json-csv-node](https://www.npmjs.com/package/@iwsio/json-csv-node) for the latest, active version of this package. It shares an identical API with this one and should be pretty seamless to replace.
+
+If you need just a buffered CSV that works in browser apps, checkout the core project [@iwsio/json-csv-core](https://www.npmjs.com/package/@iwsio/json-csv-core). It supports everything except Node Stream API.
+
+### [@iwsio/json-csv-node](https://www.npmjs.com/package/@iwsio/json-csv-node) v6 - June 2023
 The latest version 6 just released in June 2023 and includes better type definitions along with ESM & CommonJS support. [Read more about it on the v6 blog post.](https://iws.io/2023/json-csv-v6)
 
 # Usage
