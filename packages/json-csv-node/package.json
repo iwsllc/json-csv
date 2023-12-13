@@ -54,7 +54,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@iwsio/json-csv-core": "^1.1.3"
+    "@iwsio/json-csv-core": "^1"
   },
   "bugs": {
     "url": "https://github.com/IWSLLC/json-csv/issues"
