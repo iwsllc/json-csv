@@ -1,11 +1,11 @@
 const jsoncsv = require('@iwsio/json-csv-node')
-const should = require('should')
+require('should')
 
 describe('Issue 2', function() {
 	describe('When providing a filter function that returns null or undefined', function() {
 		before(function(done) {
 			this.items = [{ s: 5 }]
-			jsoncsv.buffered(this.items, { fields: [{ name: 's', label: 's', filter: v => undefined }] }, (err, csv) => {
+			jsoncsv.buffered(this.items, { fields: [{ name: 's', label: 's', filter: _v => undefined }] }, (err, csv) => {
 				this.csv = csv
 				this.err = err
 				done()

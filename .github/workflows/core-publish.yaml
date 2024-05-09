@@ -8,16 +8,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git fetch
-          git pull origin main
+          git fetch && git pull origin ${{ github.ref_name }}
           npm version patch -w packages/json-csv-core && git add .
           VER=`node ./npm-version-helper.cjs packages/json-csv-core`
           git commit -m "@iwsio/json-csv-core version bump to $VER"

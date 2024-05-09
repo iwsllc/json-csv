@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/json-csv-node",
-  "version": "6.1.3",
+  "version": "6.1.4-alpha.1",
   "description": "ESM/CJS module that easily converts JSON to CSV. This package supports streaming and buffered conversion to CSV.",
   "homepage": "https://github.com/IWSLLC/json-csv",
   "author": "Nathan Bridgewater <info@iws.io>",
@@ -40,18 +40,18 @@
     "lint": "eslint src"
   },
   "devDependencies": {
-    "@types/node": "^20.10.4",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
+    "@types/node": "^20.12.11",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
     "debug": "^4.3.4",
-    "eslint": "^8.55.0",
+    "eslint": "^8.57.0",
     "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "npm-run-all": "^4.1.5",
     "rimraf": "^5.0.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@iwsio/json-csv-core": "^1"

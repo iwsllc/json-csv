@@ -1,5 +1,5 @@
 const jsoncsv = require('@iwsio/json-csv-node')
-const should = require('should')
+require('should')
 
 describe('OR || operator', function() {
 	it('should merge column1, 2 or 3 into combinedCol (from 2 to single column two entries)', function(done) {

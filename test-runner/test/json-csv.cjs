@@ -1,4 +1,3 @@
-/* eslint-disable mocha/no-hooks-for-single-case */
 require('should')
 const { toCsv, toCsvStream, StringWriter } = require('@iwsio/json-csv-node')
 const { Readable } = require('stream')
@@ -13,7 +12,7 @@ describe('CJS: JSON - CSV', function() {
 						name: 'contact.name',
 						label: 'contact'
 					},
-					 {
+					{
 						name: 'contact.amount',
 						label: 'amount'
 					}
@@ -35,11 +34,11 @@ describe('CJS: JSON - CSV', function() {
 					fields: [{
 						name: 'contact.name',
 						label: 'contact',
-						filter(value) {
+						filter(_value) {
 							return 'something else'
 						}
 					},
-					 {
+					{
 						name: 'contact.amount',
 						label: 'amount'
 					}
@@ -63,11 +62,11 @@ describe('CJS: JSON - CSV', function() {
 							if (value === true) { return 'Yes' } else { return 'No' }
 						}
 					},
-					 {
+					{
 						name: 'contact.name',
 						label: 'name'
 					},
-					 {
+					{
 						name: 'contact.amount',
 						label: 'amount'
 					}
@@ -90,7 +89,7 @@ describe('CJS: JSON - CSV', function() {
 					name: 'contact.name',
 					label: 'contact'
 				},
-			 {
+				{
 					name: 'contact.amount',
 					label: 'amount'
 				}

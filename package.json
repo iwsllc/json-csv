@@ -5,7 +5,7 @@
   "homepage": "https://github.com/IWSLLC/json-csv",
   "author": "Nathan Bridgewater <info@iws.io> (https://iws.io/)",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "bugs": {
     "url": "https://github.com/IWSLLC/json-csv/issues"
