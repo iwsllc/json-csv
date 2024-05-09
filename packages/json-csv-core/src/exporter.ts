@@ -1,4 +1,4 @@
-import { ExportOptions, FieldList } from "./types"
+import { ExportOptions, FieldList } from './types'
 
 export function checkOptions(opts?: Partial<ExportOptions>) {
 	const options: Partial<ExportOptions> = opts == null ? {} : { ...opts }
@@ -11,7 +11,7 @@ export function checkOptions(opts?: Partial<ExportOptions>) {
 /**
  * Main entry point. Convert a buffered array of data to a CSV string.
  */
-export function buffered(data:  Record<string, any>[], opts: Partial<ExportOptions>) {
+export function buffered(data: Record<string, any>[], opts: Partial<ExportOptions>) {
 	const options = checkOptions(opts)
 	let output = ''
 	let writtenHeader = false

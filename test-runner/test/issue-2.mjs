@@ -5,7 +5,7 @@ describe('ESM: Issue 2', function() {
 	describe('When providing a filter function that returns null or undefined', function() {
 		before(function(done) {
 			this.items = [{ s: 5 }]
-			buffered(this.items, { fields: [{ name: 's', label: 's', filter: v => undefined }] }, (err, csv) => {
+			buffered(this.items, { fields: [{ name: 's', label: 's', filter: _v => undefined }] }, (err, csv) => {
 				this.csv = csv
 				this.err = err
 				done()

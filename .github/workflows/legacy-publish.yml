@@ -7,14 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
+          git fetch && git pull origin ${{ github.ref_name }}
           npm version patch --no-git-tag-version && git add .
           VER=`node ./npm-version-helper.cjs .`
           git commit -m "json-csv version bump to $VER"

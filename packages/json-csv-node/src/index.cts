@@ -1,3 +1,4 @@
+/* eslint-disable promise/no-callback-in-promise */
 import { Transform } from 'stream'
 import { buffered as bufferedCore } from '@iwsio/json-csv-core'
 import * as exporter from './exporter.cjs'
@@ -28,7 +29,6 @@ export const stream = (options: Partial<NodeExportOptions>, callback?: StreamCal
  */
 export const toCsvStream = stream
 
-
 /**
  * Convert array of objects to CSV in a synchronous operation
  * @param data Array of objects to be transformed
@@ -44,7 +44,6 @@ export const bufferedSync = bufferedCore
  * @returns The result CSV string
  */
 export const toCsvSync = bufferedSync
-
 
 /**
  * Convert array of objects to CSV

@@ -17,7 +17,7 @@ describe('ESM: Issue 21', function() {
 				]
 			}, (err, csv) => {
 				this.csv = csv
-				return this.err = err
+				this.err = err
 			})
 			return done()
 		})

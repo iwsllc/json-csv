@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 /// <reference types="../../packages/json-csv-core/dist" />
 
 const buffered_index = require('../../packages/json-csv-core/dist')

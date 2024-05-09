@@ -1,4 +1,3 @@
-/* eslint-disable mocha/no-hooks-for-single-case */
 const { StringWriter } = require('@iwsio/json-csv-node')
 const { Readable } = require('stream')
 const { expect } = require('chai')
