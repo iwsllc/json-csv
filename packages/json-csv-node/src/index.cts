@@ -7,7 +7,7 @@ import { StringWriter } from './string-writer.cjs'
 
 export { StringWriter } from './string-writer.cjs'
 
-type StreamCallback = (err?: Error | null, result?: Transform) => void;
+type StreamCallback = (err?: Error | null, result?: Transform) => void
 type BufferedCallback = (err?: Error | null, result?: string) => void
 
 /**
@@ -56,8 +56,8 @@ export const buffered = (data: Record<string, any>[], options: Partial<NodeExpor
 	if (callback == null) return exporter.buffered(data, options)
 
 	exporter.buffered(data, options)
-		.then((result) => callback(null, result))
-		.catch((err) => callback(err))
+		.then(result => callback(null, result))
+		.catch(err => callback(err))
 }
 
 /**

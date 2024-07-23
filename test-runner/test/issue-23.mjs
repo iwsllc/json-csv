@@ -1,9 +1,9 @@
 import { buffered } from '@iwsio/json-csv-node'
 import 'should'
 
-describe('ESM: Issue 23', function() {
-	describe('When excluding label definitions', function() {
-		before(function(done) {
+describe('ESM: Issue 23', function () {
+	describe('When excluding label definitions', function () {
+		before(function (done) {
 			this.items = [{ a: 'first', b: 'second' }, { a: 'third', b: 'fourth' }, { a: 'fifth', b: 'sixth' }]
 			buffered(this.items, {
 				fields: [
@@ -17,12 +17,12 @@ describe('ESM: Issue 23', function() {
 			done()
 		})
 
-		it('should export a and b', function() { return this.csv.should.equal('a,b\r\nfirst,second\r\nthird,fourth\r\nfifth,sixth\r\n') })
+		it('should export a and b', function () { return this.csv.should.equal('a,b\r\nfirst,second\r\nthird,fourth\r\nfifth,sixth\r\n') })
 	})
 
 	// also this issue came up (because of the first one)
-	return describe('When exporting a column that resolves undefined in the data set', function() {
-		before(function(done) {
+	return describe('When exporting a column that resolves undefined in the data set', function () {
+		before(function (done) {
 			this.items = [{ a: 'first', b: 'second' }, { a: 'third', b: 'fourth' }, { a: 'fifth', b: 'sixth' }]
 			buffered(this.items, {
 				fields: [
@@ -37,6 +37,6 @@ describe('ESM: Issue 23', function() {
 			return done()
 		})
 
-		return it('should export a, b, and c', function() { return this.csv.should.equal('a,b,c\r\nfirst,second,\r\nthird,fourth,\r\nfifth,sixth,\r\n') })
+		return it('should export a, b, and c', function () { return this.csv.should.equal('a,b,c\r\nfirst,second,\r\nthird,fourth,\r\nfifth,sixth,\r\n') })
 	})
 })

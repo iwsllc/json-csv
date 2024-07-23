@@ -1,5 +1,5 @@
-import { buffered } from './exporter'
-export * as exporter from './exporter'
+import { buffered } from './exporter.js'
+export * as exporter from './exporter.js'
 
 export { buffered, buffered as toCsv }
 

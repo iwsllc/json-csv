@@ -24,5 +24,17 @@
     "packages/json-csv-node",
     "packages/json-csv-core",
     "samples"
-  ]
+  ],
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@stylistic/eslint-plugin": "^2.4.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n": "^17.10.1",
+    "eslint-plugin-promise": "^6.6.0",
+    "eslint-plugin-react": "^7.35.0",
+    "globals": "^15.8.0",
+    "i": "^0.3.7",
+    "npm": "^10.8.2",
+    "typescript-eslint": "^7.18.0"
+  }
 }

@@ -1,8 +1,8 @@
 import index_default, { csv, csvBuffered, bufferedSync, stream, buffered, toCsv, toCsvStream, StringWriter } from '@iwsio/json-csv-node'
 import { expect } from 'chai'
 
-describe('ESM: Module exports', function() {
-	it('should export defaults', function() {
+describe('ESM: Module exports', function () {
+	it('should export defaults', function () {
 		expect(index_default.buffered).to.be.a('function')
 		expect(index_default.bufferedSync).to.be.a('function')
 		expect(index_default.toCsv).to.be.a('function')
@@ -15,7 +15,7 @@ describe('ESM: Module exports', function() {
 		expect(index_default.csvBuffered).to.be.a('function')
 	})
 
-	it('should export individuals', function() {
+	it('should export individuals', function () {
 		expect(buffered).to.be.a('function')
 		expect(bufferedSync).to.be.a('function')
 		expect(toCsv).to.be.a('function')
