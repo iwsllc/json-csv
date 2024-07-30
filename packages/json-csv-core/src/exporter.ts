@@ -1,4 +1,4 @@
-import { ExportOptions, FieldList } from './types'
+import { ExportOptions, FieldList } from './types.js'
 
 export function checkOptions(opts?: Partial<ExportOptions>) {
 	const options: Partial<ExportOptions> = opts == null ? {} : { ...opts }
@@ -17,7 +17,7 @@ export function buffered(data: Record<string, any>[], opts: Partial<ExportOption
 	let writtenHeader = false
 	const { ignoreHeader, fields } = options
 
-	data.forEach(dataItem => {
+	data.forEach((dataItem) => {
 		if (!writtenHeader && !ignoreHeader) {
 			writtenHeader = true
 			const header = getHeaderRow(fields, options.fieldSeparator)
@@ -35,7 +35,7 @@ export function prepValue(text: string, forceQuoted: boolean, fieldSeparator: st
 	if (text == null) text = ''
 	const quoted = forceQuoted || text.indexOf('"') >= 0 || text.indexOf(fieldSeparator) >= 0 || text.indexOf('\n') >= 0
 	let result = text.replace(/"/g, '""')
-	if (quoted) { result = '"' + result + '"' }
+	if (quoted) result = `"${result}"`
 	return result
 }
 
@@ -71,7 +71,7 @@ export function getBodyRow(data: Record<string, any> | undefined | null, fields:
 			val = ''
 			const fields = field.name.split('||')
 			// for each alternative
-			fields.forEach(field => {
+			fields.forEach((field) => {
 				// get value and associate
 				const fieldVal = getValue(data, field)
 				// remove whitespaces and check if non null before assign

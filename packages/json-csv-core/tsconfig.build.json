@@ -1,6 +1,8 @@
 {
 	"extends": "./tsconfig",
 	"compilerOptions": {
+		"module": "Node16",
+		"moduleResolution": "Node16",
 		"sourceMap": false,
 		"declarationMap": false
 	},

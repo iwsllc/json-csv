@@ -9,7 +9,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"incremental": true,
 		"inlineSourceMap": false,
-		"lib": ["esnext"],
+		"lib": ["ES6"],
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
 		"resolveJsonModule": true,
