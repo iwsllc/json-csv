@@ -41,9 +41,9 @@
   },
   "homepage": "https://github.com/iwsllc/json-csv/blob/main/packages/json-csv-core/README.md",
   "devDependencies": {
-    "@types/chai": "^4.3.16",
+    "@types/chai": "^4.3.17",
     "npm-run-all": "^4.1.5",
-    "rimraf": "^5.0.9",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.4"
   }
 }
