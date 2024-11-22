@@ -12,6 +12,7 @@
 		"lib": ["ES6"],
 		"module": "NodeNext",
 		"moduleResolution": "NodeNext",
+		"noImplicitAny": true,
 		"resolveJsonModule": true,
 		"skipDefaultLibCheck": true,
 		"skipLibCheck": true,
