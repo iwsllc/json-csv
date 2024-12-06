@@ -1,4 +1,4 @@
-import { ExportOptions, FieldList } from './types.js'
+import { ExportOptions, Field, FieldList } from './types.js'
 
 export function checkOptions(opts?: Partial<ExportOptions>) {
 	const options: Partial<ExportOptions> = opts == null ? {} : { ...opts }
@@ -11,7 +11,7 @@ export function checkOptions(opts?: Partial<ExportOptions>) {
 /**
  * Main entry point. Convert a buffered array of data to a CSV string.
  */
-export function buffered(data: Record<string, any>[], opts: Partial<ExportOptions>) {
+export function buffered(data: Record<string, unknown>[], opts: Partial<ExportOptions>) {
 	const options = checkOptions(opts)
 	let output = ''
 	let writtenHeader = false
@@ -31,7 +31,7 @@ export function buffered(data: Record<string, any>[], opts: Partial<ExportOption
 	return output
 }
 
-export function prepValue(text: string, forceQuoted: boolean, fieldSeparator: string): any {
+export function prepValue(text: string, forceQuoted: boolean, fieldSeparator: string): unknown {
 	if (text == null) text = ''
 	const quoted = forceQuoted || text.indexOf('"') >= 0 || text.indexOf(fieldSeparator) >= 0 || text.indexOf('\n') >= 0
 	let result = text.replace(/"/g, '""')
@@ -40,31 +40,32 @@ export function prepValue(text: string, forceQuoted: boolean, fieldSeparator: st
 }
 
 export function getHeaderRow(fields: FieldList, fieldSeparator: string) {
-	const fieldKeys = Object.keys(fields)
-	let header = fieldKeys.reduce((line, fieldKey) => {
-		const field = fields[fieldKey]
+	let header = ''
+	for (let ix = 0; ix < fields.length; ix++) {
+		const field = fields[ix]
 		const label = field.label || field.name
-		if (line === 'START') {
-			line = ''
-		} else {
-			line += fieldSeparator
+		if (ix > 0) {
+			header += fieldSeparator
 		}
-		line += prepValue(label, field.quoted, fieldSeparator)
-		return line
-	}, 'START')
+		header += prepValue(label, field.quoted, fieldSeparator)
+	}
 	header += '\r\n'
 	return header
 }
 
-export function getBodyRow(data: Record<string, any> | undefined | null, fields: FieldList, fieldSeparator: string): string {
-	const reducer = (line, field) => {
+const assertString = (value: unknown): value is string => {
+	return typeof value === 'string'
+}
+
+export function getBodyRow(data: Record<string, unknown> | undefined | null, fields: FieldList, fieldSeparator: string): string {
+	const reducer = (line: string, field: Field) => {
 		if (line === 'START') {
 			line = ''
 		} else {
 			line += fieldSeparator
 		}
 		let val = getValue(data, field.name)
-		// vinicioslc support to OR || operator  allowing multiples names to the same column
+		// support to OR || operator  allowing multiples names to the same column
 		// the code will use the last non null and non empty value
 		if (field.name.includes('||')) {
 			// by default column is empty
@@ -75,7 +76,7 @@ export function getBodyRow(data: Record<string, any> | undefined | null, fields:
 				// get value and associate
 				const fieldVal = getValue(data, field)
 				// remove whitespaces and check if non null before assign
-				if (val != null && fieldVal.trim().length > 0 && fieldVal.trim() !== '') {
+				if (val != null && assertString(fieldVal) && fieldVal.trim().length > 0 && fieldVal.trim() !== '') {
 					val = fieldVal
 				}
 				// do this for every field
@@ -84,7 +85,7 @@ export function getBodyRow(data: Record<string, any> | undefined | null, fields:
 
 		if (typeof field.transform === 'function') {
 			val = field.transform(val)
-		} else if (typeof field.filter === 'function') {
+		} else if (typeof field.filter === 'function') { // backward compatibility
 			val = field.filter(val)
 		}
 		if (typeof val !== 'undefined' && val !== null) {
@@ -99,13 +100,18 @@ export function getBodyRow(data: Record<string, any> | undefined | null, fields:
 	return row
 }
 
-export function getValue(data: Record<string, any>, keyPath: string): any {
+export function getValue(data: Record<string, unknown>, keyPath: string): unknown {
 	const keys = keyPath.split('.')
 	if (keys.length > 0) return getValueIx(data, keys, 0)
 	return ''
 }
 
-export function getValueIx(data: Record<string, any> | undefined | null, keys: string[], ix: number): any {
+const assertObject = (value: unknown): value is Record<string, unknown> => {
+	if (typeof value === 'object') return true
+	return false
+}
+
+export function getValueIx(data: Record<string, unknown> | undefined | null, keys: string[], ix: number): unknown {
 	if (data == null) return ''
 
 	// for filtered fields using the whole row as a source.
@@ -113,10 +119,10 @@ export function getValueIx(data: Record<string, any> | undefined | null, keys: s
 	if (keys[0] === 'this') return data
 
 	const val = data[keys[ix]]
-	if (typeof val === 'undefined') return ''
+	if (val == null) return ''
 
 	// walk the dot-notation recursively to get the remaining values.
-	if ((keys.length - 1) > ix) return getValueIx(val, keys, ix + 1)
+	if ((keys.length - 1) > ix && assertObject(val)) return getValueIx(val, keys, ix + 1)
 
 	return val
 }

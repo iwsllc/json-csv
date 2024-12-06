@@ -12,23 +12,23 @@ import { StringDecoder } from 'string_decoder'
  * See: https://nodejs.org/docs/latest-v14.x/api/stream.html#stream_decoding_buffers_in_a_writable_stream
  */
 export default class StringWriter extends Writable {
-	_decoder: any
+	_decoder: StringDecoder
 	data: any
 	constructor(options?: WritableOptions) {
 		super(options)
-		this._decoder = new StringDecoder(options?.defaultEncoding)
+		this._decoder = new StringDecoder(options?.defaultEncoding ?? 'utf8')
 		this.data = ''
 	}
 
-	_write(chunk, encoding, callback) {
-		if (encoding === 'buffer') {
+	_write(chunk: any, encoding: BufferEncoding, callback: (error?: Error | null) => void) {
+		if (encoding != null) {
 			chunk = this._decoder.write(chunk)
 		}
 		this.data += chunk
 		callback()
 	}
 
-	_final(callback) {
+	_final(callback: (error?: Error | null) => void) {
 		this.data += this._decoder.end()
 		callback()
 	}
