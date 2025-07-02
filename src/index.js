@@ -1,39 +1,42 @@
+/* eslint-disable promise/no-callback-in-promise */
 const Exporter = require('./exporter')
 
 module.exports = {
-  Exporter,
-  stream: function(options = {}, next) {
-    options = {...options, buffered: false}
+	Exporter,
+	stream(options = {}, next) {
+		options = { ...options, buffered: false }
 
-    let transformer = new Exporter(options).stream()
-    if (typeof next === 'function') { return next(null, transformer) }
+		let transformer = new Exporter(options).stream()
+		if (typeof next === 'function') { return next(null, transformer) }
 
-    return transformer
-  },
-  buffered: function(data, options = {}, next) {
-    options = {...options, buffered: true}
+		return transformer
+	},
+	buffered(data, options = {}, next) {
+		options = { ...options, buffered: true }
 
-    let promise = new Exporter(options).buffered(data)
-    if (typeof next === 'function') {
-      return promise
-        .then((result) => {
-          next(null, result)
-        })
-        .catch((err) => { next(err) })
-    }
+		let promise = new Exporter(options).buffered(data)
+		if (typeof next === 'function') {
+			return promise
+				// eslint-disable-next-line promise/always-return
+				.then((result) => {
+					next(null, result)
+				})
 
-    return promise
-  },
+				.catch((err) => { next(err) })
+		}
 
-  // legacy
-  csv: function(options = {}) {
-    options = {...options, buffered: false}
-    return new Exporter(options).stream()
-  },
-  csvBuffered: function(data, options = {}, done) {
-    options = {...options, buffered: true}
-    new Exporter(options).buffered(data)
-      .then((result) => { done(null, result) })
-      .catch((err) => { done(err) })
-  },
+		return promise
+	},
+
+	// legacy
+	csv(options = {}) {
+		options = { ...options, buffered: false }
+		return new Exporter(options).stream()
+	},
+	csvBuffered(data, options = {}, done) {
+		options = { ...options, buffered: true }
+		new Exporter(options).buffered(data)
+			.then((result) => { done(null, result) })
+			.catch((err) => { done(err) })
+	}
 }
