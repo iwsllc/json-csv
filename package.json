@@ -1,6 +1,6 @@
 {
   "name": "json-csv",
-  "version": "4.0.18",
+  "version": "4.0.19",
   "description": "Easily convert JSON array to CSV in Node.JS via buffered or streaming.",
   "homepage": "https://github.com/IWSLLC/json-csv",
   "author": "Nathan Bridgewater <info@iws.io> (http://iws.io/)",
