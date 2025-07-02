@@ -1,5 +1,6 @@
-import { buffered } from '@iwsio/json-csv-node'
 import 'should'
+
+import { buffered } from '@iwsio/json-csv-node'
 
 describe('ESM: Issue 23', function () {
 	describe('When excluding label definitions', function () {

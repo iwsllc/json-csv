@@ -1,5 +1,6 @@
-import { toCsv } from '@iwsio/json-csv-node'
 import 'should'
+
+import { toCsv } from '@iwsio/json-csv-node'
 
 describe('ESM: Issue 13', function () {
 	describe('When exporting fields containing literal periods as opposed to object separators', function () {

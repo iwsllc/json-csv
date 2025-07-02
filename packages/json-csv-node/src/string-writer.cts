@@ -13,14 +13,14 @@ import { StringDecoder } from 'string_decoder'
  */
 export default class StringWriter extends Writable {
 	_decoder: StringDecoder
-	data: any
+	data: string
 	constructor(options?: WritableOptions) {
 		super(options)
 		this._decoder = new StringDecoder(options?.defaultEncoding ?? 'utf8')
 		this.data = ''
 	}
 
-	_write(chunk: any, encoding: BufferEncoding, callback: (error?: Error | null) => void) {
+	_write(chunk: Buffer | string, encoding: BufferEncoding, callback: (error?: Error | null) => void) {
 		if (encoding != null) {
 			chunk = this._decoder.write(chunk)
 		}

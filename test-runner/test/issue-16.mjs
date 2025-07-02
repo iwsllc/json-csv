@@ -1,5 +1,6 @@
-import { buffered } from '@iwsio/json-csv-node'
 import 'should'
+
+import { buffered } from '@iwsio/json-csv-node'
 
 describe('ESM: Issue 16', function () {
 	describe('When exporting flexible schema data that may include a null element in the data source', function () {

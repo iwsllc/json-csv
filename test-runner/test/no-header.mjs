@@ -1,5 +1,6 @@
-import { toCsv } from '@iwsio/json-csv-node'
 import 'should'
+
+import { toCsv } from '@iwsio/json-csv-node'
 
 describe('ESM: No Header Row', function () {
 	return it('should not contain a header', function (done) {

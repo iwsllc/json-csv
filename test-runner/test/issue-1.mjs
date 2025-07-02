@@ -1,5 +1,6 @@
-import { buffered } from '@iwsio/json-csv-node'
 import 'should'
+
+import { buffered } from '@iwsio/json-csv-node'
 
 describe('ESM: Issue 1', function () {
 	it('should contain a final endquote', function (done) {

@@ -1,8 +1,9 @@
 /* eslint-disable promise/no-callback-in-promise */
-import { Transform } from 'stream'
 import { buffered as bufferedCore } from '@iwsio/json-csv-core'
-import * as exporter from './exporter.cjs'
+import { Transform } from 'stream'
+
 import type { NodeExportOptions } from './exporter.cjs'
+import * as exporter from './exporter.cjs'
 import { StringWriter } from './string-writer.cjs'
 
 export { StringWriter } from './string-writer.cjs'

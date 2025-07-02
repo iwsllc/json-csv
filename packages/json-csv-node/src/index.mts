@@ -1,26 +1,24 @@
 import {
 	buffered,
 	bufferedSync,
-	stream,
-	toCsv,
-	toCsvSync,
-	toCsvStream,
-	StringWriter,
 	csv,
-	csvBuffered
-} from './index.cjs'
+	csvBuffered,
+	stream,
+	StringWriter,
+	toCsv,
+	toCsvStream,
+	toCsvSync } from './index.cjs'
 
 export {
 	buffered,
 	bufferedSync,
-	stream,
-	toCsv,
-	toCsvSync,
-	toCsvStream,
-	StringWriter,
 	csv,
-	csvBuffered
-} from './index.cjs'
+	csvBuffered,
+	stream,
+	StringWriter,
+	toCsv,
+	toCsvStream,
+	toCsvSync } from './index.cjs'
 
 export default {
 	buffered,

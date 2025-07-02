@@ -1,5 +1,6 @@
-import { buffered } from '@iwsio/json-csv-node'
 import 'should'
+
+import { buffered } from '@iwsio/json-csv-node'
 
 describe('ESM: Issue 21', function () {
 	describe('When exporting a column, concatenated from two source fields', function () {
