@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/json-csv-core",
-  "version": "1.2.2-alpha.1",
+  "version": "1.2.2",
   "description": "Easily convert JSON to CSV. This is a core library built for browser and node to support buffered conversion to CSV.",
   "keywords": [
     "json",
