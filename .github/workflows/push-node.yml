@@ -39,7 +39,7 @@ jobs:
       node-version-file: '.nvmrc'
       scope: '@iwsio'
       install-command: npm ci
-      build-command: npm run build -w packages/json-csv-node
+      build-command: npm run build
       publish-command: npm publish -w packages/json-csv-node --access public
     secrets:
       # This token is used for reading npm packages; use when private packages are used
