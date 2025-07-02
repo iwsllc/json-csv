@@ -1,11 +1,11 @@
 import { StringWriter } from '@iwsio/json-csv-node'
-import { Readable } from 'stream'
 import { expect } from 'chai'
+import { Readable } from 'stream'
 
 describe('ESM: BufferedWriter', function () {
 	describe('utf8 encoding', function () {
 		before(function (done) {
-			async function * generateReadableChunk() {
+			async function* generateReadableChunk() {
 				yield Buffer.from('abcd', 'utf8')
 			}
 			this.result = ''
@@ -22,7 +22,7 @@ describe('ESM: BufferedWriter', function () {
 	})
 	describe('hex encoding', function () {
 		before(function (done) {
-			async function * generateReadableChunk() {
+			async function* generateReadableChunk() {
 				yield Buffer.from('abcd', 'utf8')
 			}
 			this.result = ''

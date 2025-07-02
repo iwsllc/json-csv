@@ -52,7 +52,7 @@ const options = {
 		{
 			name: 'registration.level',
 			label: 'Level',
-			transform: function (value) {
+			transform(value) {
 				switch (value) {
 					case 1: return 'Test 1'
 					case 2: return 'Test 2'

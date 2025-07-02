@@ -19,7 +19,7 @@ import toCsv from '@iwsio/json-csv-core'
 
 ### In Typescript, `toCsv` is defined as:
 ```typescript
-declare toCsv = (data: any[], options: ExporterOptions) => string;
+declare function toCsv(data: Record<string, unknown>[], opts: Partial<ExportOptions>): string;
 ```
 
 ## Example

@@ -1,5 +1,5 @@
-import { stream, buffered, checkOptions } from './exporter.cjs'
+import { buffered, checkOptions, stream } from './exporter.cjs'
 
-export { buffered, stream, checkOptions } from './exporter.cjs'
+export { buffered, checkOptions, stream } from './exporter.cjs'
 
 export default { buffered, stream, checkOptions }

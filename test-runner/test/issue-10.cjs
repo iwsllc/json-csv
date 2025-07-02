@@ -17,8 +17,8 @@ describe('Issue 10', function () {
 							label: 'amount'
 						}
 					]
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done(err)
 				})
@@ -45,8 +45,8 @@ describe('Issue 10', function () {
 							label: 'PRICE'
 						}
 					]
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done(err)
 				}

@@ -1,4 +1,4 @@
-import index_default, { csv, csvBuffered, bufferedSync, stream, buffered, toCsv, toCsvStream, StringWriter } from '@iwsio/json-csv-node'
+import index_default, { buffered, bufferedSync, csv, csvBuffered, stream, StringWriter, toCsv, toCsvStream } from '@iwsio/json-csv-node'
 import { expect } from 'chai'
 
 describe('ESM: Module exports', function () {

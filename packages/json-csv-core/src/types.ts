@@ -1,4 +1,4 @@
-export type Field = {
+export interface Field {
 	name: string
 	label?: string
 	transform?: (source: unknown) => string
@@ -13,7 +13,7 @@ export type Field = {
 
 export type FieldList = Field[]
 
-export type ExportOptions = {
+export interface ExportOptions {
 	fieldSeparator?: string
 	fields: FieldList
 	ignoreHeader: boolean

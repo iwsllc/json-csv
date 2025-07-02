@@ -22,7 +22,7 @@ describe('ESM: JSON - CSV, async', function () {
 				{
 					name: 'contact.name',
 					label: 'contact',
-					filter: function () {
+					filter() {
 						return 'something else'
 					}
 				}, {

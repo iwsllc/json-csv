@@ -5,7 +5,7 @@ const { expect } = require('chai')
 describe('CJS BufferedWriter', function () {
 	describe('utf8 encoding', function () {
 		before(function (done) {
-			async function * generateReadableChunk() {
+			async function* generateReadableChunk() {
 				yield Buffer.from('abcd', 'utf8')
 			}
 			this.result = ''
@@ -22,7 +22,7 @@ describe('CJS BufferedWriter', function () {
 	})
 	describe('hex encoding', function () {
 		before(function (done) {
-			async function * generateReadableChunk() {
+			async function* generateReadableChunk() {
 				yield Buffer.from('abcd', 'utf8')
 			}
 			this.result = ''

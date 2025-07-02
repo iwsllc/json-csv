@@ -18,8 +18,8 @@ describe('CJS: JSON - CSV', function () {
 					}
 					],
 					fieldSeparator: ';'
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done(err)
 				})
@@ -43,8 +43,8 @@ describe('CJS: JSON - CSV', function () {
 						label: 'amount'
 					}
 					]
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done(err)
 				})
@@ -72,8 +72,8 @@ describe('CJS: JSON - CSV', function () {
 						label: 'amount'
 					}
 					]
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done()
 				})

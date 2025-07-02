@@ -1,5 +1,6 @@
-import { toCsv } from '@iwsio/json-csv-node'
 import 'should'
+
+import { toCsv } from '@iwsio/json-csv-node'
 
 describe('ESM: OR || operator', function () {
 	it('should merge column1, 2 or 3 into combinedCol (from 2 to single column two entries)', function (done) {

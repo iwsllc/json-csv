@@ -1,5 +1,6 @@
 import 'should'
-import { toCsv, toCsvStream, StringWriter } from '@iwsio/json-csv-node'
+
+import { StringWriter, toCsv, toCsvStream } from '@iwsio/json-csv-node'
 import { Readable } from 'stream'
 
 describe('ESM: JSON - CSV', function () {
@@ -18,8 +19,8 @@ describe('ESM: JSON - CSV', function () {
 					}
 					],
 					fieldSeparator: ';'
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done(err)
 				})
@@ -43,8 +44,8 @@ describe('ESM: JSON - CSV', function () {
 						label: 'amount'
 					}
 					]
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done(err)
 				})
@@ -72,8 +73,8 @@ describe('ESM: JSON - CSV', function () {
 						label: 'amount'
 					}
 					]
-				}
-				, (err, csv) => {
+				},
+				(err, csv) => {
 					this.result = csv
 					done()
 				})

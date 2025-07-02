@@ -7,10 +7,40 @@ on:
       - 'packages/json-csv-node/**'
 
 jobs:
-  test:
+  tests:
     uses: ./.github/workflows/node-test.yaml
-  version-and-publish:
-    needs: test
+  version:
+    needs: tests
     if: ${{ !contains(github.event.head_commit.message, '#skip') }}
-    uses: ./.github/workflows/node-publish.yaml
-    secrets: inherit
+    concurrency:
+      group: 'versioning-automation'
+      cancel-in-progress: false
+    uses: iwsllc/workflows/.github/workflows/version-as-app.yaml@main
+    with:
+      ref: ${{ github.ref_name }}
+      registry-url: 'https://registry.npmjs.org'
+      node-version-file: '.nvmrc'
+      cache: npm
+      scope: '@iwsio'
+      version-command: npm version patch -w packages/json-csv-node
+      version-workspace: packages/json-csv-node
+      tag-includes-name: true
+    secrets:
+      IWS_VERSION_BOT_PK: ${{ secrets.IWS_VERSION_BOT_PK}}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  publish:
+    needs: version
+    if: ${{ !contains(github.event.head_commit.message, '#skip') }}
+    uses: iwsllc/workflows/.github/workflows/publish.yaml@v2
+    with:
+      ref: ${{ github.ref_name }}
+      registry-url: 'https://registry.npmjs.org'
+      cache: npm
+      node-version-file: '.nvmrc'
+      scope: '@iwsio'
+      install-command: npm ci
+      build-command: npm run build -w packages/json-csv-node
+      publish-command: npm publish -w packages/json-csv-node --access public
+    secrets:
+      # This token is used for reading npm packages; use when private packages are used
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
