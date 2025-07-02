@@ -26,6 +26,6 @@
     "samples"
   ],
   "devDependencies": {
-    "@iwsio/eslint-config": "^1.0.8"
+    "@iwsio/eslint-config": "^1.0.10"
   }
 }
