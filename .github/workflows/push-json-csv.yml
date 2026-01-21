@@ -39,7 +39,7 @@ jobs:
       registry-url: 'https://registry.npmjs.org'
       skip-node-auth: true
       cache: npm
-      node-version-file: '.nvmrc'
+      node-version: 24
       scope: '@iwsio'
       install-command: ""
       build-command: ""
