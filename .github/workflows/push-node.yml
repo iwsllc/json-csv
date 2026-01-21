@@ -6,6 +6,10 @@ on:
     paths:
       - 'packages/json-csv-node/**'
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   tests:
     uses: ./.github/workflows/node-test.yaml
@@ -31,7 +35,7 @@ jobs:
   publish:
     needs: version
     if: ${{ !contains(github.event.head_commit.message, '#skip') }}
-    uses: iwsllc/workflows/.github/workflows/publish.yaml@v2
+    uses: iwsllc/workflows/.github/workflows/publish.yaml@v5
     with:
       ref: ${{ github.ref_name }}
       registry-url: 'https://registry.npmjs.org'
