@@ -40,6 +40,7 @@ jobs:
       ref: ${{ github.ref_name }}
       registry-url: 'https://registry.npmjs.org'
       cache: npm
+      skip-node-auth: true
       node-version-file: '.nvmrc'
       scope: '@iwsio'
       install-command: npm ci
