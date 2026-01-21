@@ -9,10 +9,7 @@
     "export",
     "json"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:IWSLLC/json-csv.git"
-  },
+  "repository": "github:iwsllc/json-csv",
   "main": "./src/index.js",
   "engines": {
     "node": ">=10"
