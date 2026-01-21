@@ -30,10 +30,7 @@
     "lint": "eslint src",
     "clean": "rimraf dist"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/IWSLLC/json-csv.git"
-  },
+  "repository": "github:iwsllc/json-csv",
   "author": "Nathan Bridgewater <info@iws.io> (https://iws.io/)",
   "license": "BSD-3-Clause",
   "bugs": {
