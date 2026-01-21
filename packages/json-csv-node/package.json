@@ -1,6 +1,6 @@
 {
   "name": "@iwsio/json-csv-node",
-  "version": "6.2.4-alpha.1",
+  "version": "6.2.4",
   "description": "ESM/CJS module that easily converts JSON to CSV. This package supports streaming and buffered conversion to CSV.",
   "homepage": "https://github.com/iwsllc/json-csv",
   "author": "Nathan Bridgewater <info@iws.io>",
