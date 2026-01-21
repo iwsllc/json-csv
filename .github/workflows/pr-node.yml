@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - 'packages/json-csv-node/**'
+      - 'packages/json-csv-node/src/**'
 jobs:
   test:
     if: ${{github.event.pull_request.draft == false && !contains(github.event.head_commit.message, '#skip') }}
