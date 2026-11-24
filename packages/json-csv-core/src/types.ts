@@ -17,4 +17,11 @@ export interface ExportOptions {
 	fieldSeparator?: string
 	fields: FieldList
 	ignoreHeader: boolean
+	/**
+	 * Prefix `'` to a value starting with `=`, `+`, `-`, `@`, tab or CR, so a spreadsheet opening
+	 * the file shows it as text instead of evaluating it as a formula (CSV injection). Quoting
+	 * does not prevent this: the quotes are CSV syntax and are stripped on read. Plain numbers,
+	 * including negatives, are left alone. Default `false`.
+	 */
+	escapeFormulas?: boolean
 }
