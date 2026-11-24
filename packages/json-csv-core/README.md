@@ -80,6 +80,11 @@ test,123,yes,test
 
   // Other default options:
   fieldSeparator: ',',
-  ignoreHeader: false
+  ignoreHeader: false,
+
+  // Prefix ' to values starting with =, +, -, @, tab or CR so spreadsheets
+  // show them as text rather than evaluating a formula (CSV injection).
+  // Quoting alone does not prevent this. Plain numbers (e.g. -12.50) are left as-is.
+  escapeFormulas: false
 }
 ```

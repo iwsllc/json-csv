@@ -24,7 +24,7 @@ export function buffered(data: Record<string, unknown>[], opts: Partial<ExportOp
 			output += header
 		}
 
-		const line = getBodyRow(dataItem, fields, options.fieldSeparator)
+		const line = getBodyRow(dataItem, fields, options.fieldSeparator, options.escapeFormulas)
 		output += line
 	})
 
@@ -37,6 +37,18 @@ export function prepValue(text: string, forceQuoted: boolean, fieldSeparator: st
 	let result = text.replace(/"/g, '""')
 	if (quoted) result = `"${result}"`
 	return result
+}
+
+const FORMULA_TRIGGER = /^[=+\-@\t\r]/
+const PLAIN_NUMBER = /^[-+]?\d+(\.\d+)?$/
+
+/**
+ * Neutralize a value a spreadsheet would evaluate as a formula by prefixing `'`.
+ * Plain numbers are exempt so a negative amount stays numeric.
+ */
+export function escapeFormula(text: string): string {
+	if (!FORMULA_TRIGGER.test(text) || PLAIN_NUMBER.test(text)) return text
+	return `'${text}`
 }
 
 export function getHeaderRow(fields: FieldList, fieldSeparator: string) {
@@ -57,7 +69,7 @@ const assertString = (value: unknown): value is string => {
 	return typeof value === 'string'
 }
 
-export function getBodyRow(data: Record<string, unknown> | undefined | null, fields: FieldList, fieldSeparator: string): string {
+export function getBodyRow(data: Record<string, unknown> | undefined | null, fields: FieldList, fieldSeparator: string, escapeFormulas = false): string {
 	const reducer = (line: string, field: Field) => {
 		if (line === 'START') {
 			line = ''
@@ -90,7 +102,8 @@ export function getBodyRow(data: Record<string, unknown> | undefined | null, fie
 		}
 		if (typeof val !== 'undefined' && val !== null) {
 			const quoted = typeof field.quoted !== 'undefined' && field.quoted
-			line += prepValue(val.toString(), quoted, fieldSeparator)
+			const text = escapeFormulas ? escapeFormula(val.toString()) : val.toString()
+			line += prepValue(text, quoted, fieldSeparator)
 		}
 		return line
 	}
